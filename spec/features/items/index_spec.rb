@@ -52,4 +52,64 @@ RSpec.describe "Items Index Page" do
       expect(page).to_not have_content("Price: $#{@dog_bone.price}")
     end
   end
+  describe "When I visit the items index page" do
+    before(:each) do
+      @item1 = create(:item, name: "item1")
+      @item2 = create(:item, name: "item2", active?: false)
+      @item3 = create(:item, name: "item3")
+      @item4 = create(:item, name: "item4")
+      @item5 = create(:item, name: "item5")
+      @item6 = create(:item, name: "item6")
+      @item7 = create(:item, name: "item7")
+      @item8 = create(:item, name: "item8")
+
+      @order1 = create(:order)      
+      @order2 = create(:order)      
+      @order3 = create(:order)      
+      @order4 = create(:order)      
+      @order5 = create(:order)       
+
+      ItemOrder.create(order: @order1, item: @item1, price: 5, quantity: 20)
+      ItemOrder.create(order: @order1, item: @item4, price: 5, quantity: 15)
+      ItemOrder.create(order: @order2, item: @item1, price: 5, quantity: 2)
+      ItemOrder.create(order: @order2, item: @item3, price: 5, quantity: 6)
+      ItemOrder.create(order: @order3, item: @item3, price: 5, quantity: 6)
+      ItemOrder.create(order: @order4, item: @item6, price: 5, quantity: 6)
+      ItemOrder.create(order: @order4, item: @item6, price: 5, quantity: 1)
+      ItemOrder.create(order: @order4, item: @item7, price: 5, quantity: 5)
+      ItemOrder.create(order: @order5, item: @item8, price: 5, quantity: 3)
+    end
+
+    it "displays the top 5 most popular items along with the quantity purchased" do
+      within('#most-popular-items') do
+        expect(@item1.name).to appear_before(@item4.name)
+        expect(@item4.name).to appear_before(@item3.name)
+        expect(@item3.name).to appear_before(@item6.name)
+        expect(@item6.name).to appear_before(@item7.name)
+      end
+    end 
+    it "displays the top 5 most popular items along with the quantity purchased" do
+      within("#least-popular-items") do
+        expect(@item8.name).to appear_before(@item7.name)
+        expect(@item7.name).to appear_before(@item6.name)
+        expect(@item6.name).to appear_before(@item3.name)
+        expect(@item3.name).to appear_before(@item4.name)
+      end 
+    end 
+  end
 end
+
+
+
+
+
+
+# User Story 18, Items Index Page Statistics
+
+# As any kind of user on the system
+# When I visit the items index page ("/items")
+# I see an area with statistics:
+# - the top 5 most popular items by quantity purchased, plus the quantity bought
+# - the bottom 5 least popular items, plus the quantity bought
+
+# "Popularity" is determined by total quantity of that item ordered
