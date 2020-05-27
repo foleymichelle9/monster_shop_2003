@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   
   get "/register", to: "users#new"
   post "/register", to: "users#create"
-
+          
   get "/profile", to: "profiles#show"
+
+  resources :sessions, only: [:new, :create]
 end
