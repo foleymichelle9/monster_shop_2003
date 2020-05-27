@@ -78,9 +78,13 @@ RSpec.describe "Items Index Page" do
       ItemOrder.create(order: @order4, item: @item6, price: 5, quantity: 1)
       ItemOrder.create(order: @order4, item: @item7, price: 5, quantity: 5)
       ItemOrder.create(order: @order5, item: @item8, price: 5, quantity: 3)
+
+      visit '/items'
+      
     end
 
     it "displays the top 5 most popular items along with the quantity purchased" do
+
       within('#most-popular-items') do
         expect(@item1.name).to appear_before(@item4.name)
         expect(@item4.name).to appear_before(@item3.name)
@@ -89,6 +93,7 @@ RSpec.describe "Items Index Page" do
       end
     end 
     it "displays the top 5 most popular items along with the quantity purchased" do
+
       within("#least-popular-items") do
         expect(@item8.name).to appear_before(@item7.name)
         expect(@item7.name).to appear_before(@item6.name)
@@ -98,18 +103,3 @@ RSpec.describe "Items Index Page" do
     end 
   end
 end
-
-
-
-
-
-
-# User Story 18, Items Index Page Statistics
-
-# As any kind of user on the system
-# When I visit the items index page ("/items")
-# I see an area with statistics:
-# - the top 5 most popular items by quantity purchased, plus the quantity bought
-# - the bottom 5 least popular items, plus the quantity bought
-
-# "Popularity" is determined by total quantity of that item ordered
