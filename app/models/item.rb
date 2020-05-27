@@ -28,4 +28,12 @@ class Item <ApplicationRecord
   def self.active_items
     Item.where(active?: true)
   end
+
+  def self.popular_items(limit, order)
+    Item.select("items.*, sum(item_orders.quantity)")
+        .joins(:item_orders)
+        .group('items.id')
+        .order("sum(item_orders.quantity) #{order}")
+        .limit(limit)
+  end 
 end

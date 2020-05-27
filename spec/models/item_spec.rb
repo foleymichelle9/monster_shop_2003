@@ -50,12 +50,45 @@ describe Item, type: :model do
 
     it 'active_items' do
       item1 = create(:item)
-      item3 = create(:item, active?: false)
-      item4 = create(:item)
+      item2 = create(:item, active?: false)
+      item3 = create(:item)
 
       items = Item.all
 
-      expect(items.active_items).to eq([@chain, item1, item4])
+      expect(items.active_items).to eq([@chain, item1, item3])
+    end
+  end 
+  describe "methods" do
+    it 'most_popular_items' do
+      item1 = create(:item, name: "item1")
+      item2 = create(:item, name: "item2", active?: false)
+      item3 = create(:item, name: "item3")
+      item4 = create(:item, name: "item4")
+      item5 = create(:item, name: "item5")
+      item6 = create(:item, name: "item6")
+      item7 = create(:item, name: "item7")
+      item8 = create(:item, name: "item8")
+
+      order1 = create(:order)      
+      order2 = create(:order)      
+      order3 = create(:order)      
+      order4 = create(:order)      
+      order5 = create(:order)       
+
+      ItemOrder.create(order: order1, item: item1, price: 5, quantity: 20)
+      ItemOrder.create(order: order1, item: item4, price: 5, quantity: 15)
+      ItemOrder.create(order: order2, item: item1, price: 5, quantity: 2)
+      ItemOrder.create(order: order2, item: item3, price: 5, quantity: 6)
+      ItemOrder.create(order: order3, item: item3, price: 5, quantity: 6)
+      ItemOrder.create(order: order4, item: item6, price: 5, quantity: 6)
+      ItemOrder.create(order: order4, item: item6, price: 5, quantity: 1)
+      ItemOrder.create(order: order4, item: item7, price: 5, quantity: 5)
+      ItemOrder.create(order: order5, item: item8, price: 5, quantity: 3)
+
+      items = Item.all
+      
+      expect(items.popular_items(5, 'desc')).to eq([item1, item4, item3, item6, item7])
+      expect(items.popular_items(5, 'asc')).to eq([item8, item7, item6, item3, item4])
     end
   end
 end
