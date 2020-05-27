@@ -28,7 +28,7 @@
 <h1>Top 5 Most Popular Items</h1>
 <section class="grid-container" id='most-popular-items'>
   <% @items.popular_items(5, 'desc').each do |item| %>
-  <section class="grid-item">
+  <section class="grid-item" id='most-item-<%=item.id%>'>
     <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
     <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
     <%= link_to image_tag("#{item.image}"), "/items/#{item.id}" %>
@@ -42,7 +42,7 @@
 <h1>Top 5 Least Popular Items</h1>
 <section class="grid-container" id='least-popular-items'>
   <% @items.popular_items(5, 'asc').each do |item| %>
-  <section class="grid-item">
+  <section class="grid-item" id='least-item-<%=item.id%>'>
     <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
     <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
     <%= link_to image_tag("#{item.image}"), "/items/#{item.id}" %>

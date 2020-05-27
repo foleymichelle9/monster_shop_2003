@@ -91,6 +91,26 @@ RSpec.describe "Items Index Page" do
         expect(@item3.name).to appear_before(@item6.name)
         expect(@item6.name).to appear_before(@item7.name)
       end
+
+      within("#most-item-#{@item1.id}") do
+        expect(page).to have_content(22)
+      end
+
+      within("#most-item-#{@item4.id}") do
+        expect(page).to have_content(15)
+      end
+
+      within("#most-item-#{@item3.id}") do
+        expect(page).to have_content(12)
+      end
+
+      within("#most-item-#{@item6.id}") do
+        expect(page).to have_content(7)
+      end
+
+      within("#most-item-#{@item7.id}") do
+        expect(page).to have_content(5)
+      end
     end 
     it "displays the top 5 most popular items along with the quantity purchased" do
 
@@ -100,6 +120,26 @@ RSpec.describe "Items Index Page" do
         expect(@item6.name).to appear_before(@item3.name)
         expect(@item3.name).to appear_before(@item4.name)
       end 
+
+      within("#least-item-#{@item8.id}") do
+        expect(page).to have_content(3)
+      end
+
+      within("#least-item-#{@item7.id}") do
+        expect(page).to have_content(5)
+      end
+
+      within("#least-item-#{@item6.id}") do
+        expect(page).to have_content(7)
+      end
+
+      within("#least-item-#{@item3.id}") do
+        expect(page).to have_content(12)
+      end
+
+      within("#least-item-#{@item4.id}") do
+        expect(page).to have_content(15)
+      end
     end 
   end
 end
