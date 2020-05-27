@@ -23,7 +23,7 @@ RSpec.describe "Items Index Page" do
       expect(page).to have_link(@dog_bone.merchant.name)
     end
 
-    it "I can see a list of all of the items "do
+    it "I can see a list of all active items "do
 
       visit '/items'
 
@@ -48,7 +48,7 @@ RSpec.describe "Items Index Page" do
       end
 
       within "#item-#{@dog_bone.id}" do
-        expect(page).to have_link(@dog_bone.name)
+        expect(page).to_not have_link(@dog_bone.name)
         expect(page).to have_content(@dog_bone.description)
         expect(page).to have_content("Price: $#{@dog_bone.price}")
         expect(page).to have_content("Inactive")
@@ -59,3 +59,11 @@ RSpec.describe "Items Index Page" do
     end
   end
 end
+
+# User Story 17, Items Index Page
+
+# As any kind of user on the system
+# I can visit the items catalog ("/items")
+# I see all items in the system except disabled items
+
+# The item image is a link to that item's show page

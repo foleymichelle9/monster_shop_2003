@@ -47,5 +47,15 @@ describe Item, type: :model do
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
     end
+
+    it 'active_items' do
+      item1 = create(:item)
+      item3 = create(:item, active?: false)
+      item4 = create(:item)
+
+      items = Item.all
+
+      expect(items.active_items).to eq([@chain, item1, item4])
+    end
   end
 end
