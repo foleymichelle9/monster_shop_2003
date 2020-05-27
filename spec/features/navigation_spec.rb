@@ -32,6 +32,11 @@ RSpec.describe 'Site Navigation' do
         expect(page).to have_content("Cart: 0")
       end
 
+      within 'nav' do
+        click_link "Register"
+      end
+
+      expect(current_path).to eq('/register')
     end
   end
 end
