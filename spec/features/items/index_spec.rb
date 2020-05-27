@@ -53,11 +53,3 @@ RSpec.describe "Items Index Page" do
     end
   end
 end
-
-# User Story 17, Items Index Page
-
-# As any kind of user on the system
-# I can visit the items catalog ("/items")
-# I see all items in the system except disabled items
-
-# The item image is a link to that item's show page
