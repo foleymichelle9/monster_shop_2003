@@ -13,6 +13,9 @@ class UsersController < ApplicationController
     elsif email_exists?
       flash[:error] = "Email has already been taken"
       render :new
+    elsif @user.password != @user.password_confirmation
+      flash[:error] = "Passwords did not match."
+      render :new
     else
       flash[:notice] = "#{missing_params(user_params).join(", ")} can't be blank, please try again."
       render :new
