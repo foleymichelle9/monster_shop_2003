@@ -25,4 +25,19 @@ class Item <ApplicationRecord
     item_orders.empty?
   end
 
+  def self.active_items
+    Item.where(active?: true)
+  end
+
+  def self.popular_items(limit, order)
+    Item.select("items.*, sum(item_orders.quantity)")
+        .joins(:item_orders)
+        .group('items.id')
+        .order("sum(item_orders.quantity) #{order}")
+        .limit(limit)
+  end 
+
+  def quantity_purchased
+    item_orders.sum(:quantity)
+  end
 end
