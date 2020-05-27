@@ -42,6 +42,29 @@ RSpec.describe "As a visitor", type: :feature do
 
     end
 
+    it "Then I am on the user registration page ('/register')" do
+      visit '/items'
+
+      click_on 'Register'
+
+      expect(current_path).to eq('/register')
+
+      fill_in "Name",	with: "John" 
+      fill_in "Address",	with: "123 Test St." 
+      fill_in "City",	with: "Denver" 
+      fill_in "State",	with: "Colorado" 
+      fill_in "Zip",	with: "80234" 
+      fill_in "Email",	with: "test@email.com" 
+      fill_in "Password",	with: "password123" 
+      fill_in "Confirm Password",	with: "123pass" 
+
+      click_on 'Submit Form'
+
+      expect(current_path).to eq("/register") 
+      expect(page).to have_content("Passwords did not match.")
+
+    end
+
     it "cannot create a new profile with an email address already in use" do
       visit "/register"
       fill_in :name, with: @user_info1[:name]
@@ -51,7 +74,7 @@ RSpec.describe "As a visitor", type: :feature do
       fill_in :zip,	with: @user_info1[:zip]
       fill_in :email,	with: @user_info1[:email]
       fill_in :password, with: @user_info1[:password]
-      fill_in :confirm_password,	with: @user_info1[:password]
+      fill_in :password_confirmation,	with: @user_info1[:password]
       click_button "Submit Form"
 
       visit "/register"
@@ -62,7 +85,7 @@ RSpec.describe "As a visitor", type: :feature do
       fill_in :zip,	with: @user_info2[:zip]
       fill_in :email,	with: @user_info1[:email]
       fill_in :password, with: @user_info2[:password]
-      fill_in :confirm_password,	with: @user_info2[:password]
+      fill_in :password_confirmation,	with: @user_info2[:password]
       click_button "Submit Form"
 
       expect(current_path).to eq("/register")
@@ -83,7 +106,7 @@ RSpec.describe "As a visitor", type: :feature do
       # Missing zip field
       fill_in :email,	with: @user_info2[:email]
       fill_in :password, with: @user_info2[:password]
-      fill_in :confirm_password,	with: @user_info2[:password]
+      fill_in :password_confirmation,	with: @user_info2[:password]
       click_button "Submit"
 
       expect(current_path).to eq("/register") 
