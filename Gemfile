@@ -15,6 +15,8 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jbuilder', '~> 2.5'
 gem 'factory_bot_rails'
 gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+gem 'orderly'
+
 
 
 group :development, :test do
