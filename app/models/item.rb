@@ -36,4 +36,8 @@ class Item <ApplicationRecord
         .order("sum(item_orders.quantity) #{order}")
         .limit(limit)
   end 
+
+  def quantity_purchased
+    item_orders.sum(:quantity)
+  end
 end
