@@ -6,4 +6,6 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true
 
   has_secure_password
+
+  enum role: {regular: 0, merchant: 1, admin: 2}
 end
