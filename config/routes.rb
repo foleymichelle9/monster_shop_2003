@@ -40,4 +40,8 @@ Rails.application.routes.draw do
   patch "/users/:user_id", to: "users#update"
 
   get "/profile", to: "profiles#show"
+
+  resources :sessions, only: [:create]
+  get '/login', to: 'sessions#new'
+  get '/logout', to: 'sessions#destroy'
 end

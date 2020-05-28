@@ -1,0 +1,9 @@
+<h1>Registered User Login</h1>
+ 
+ <section id="login-form">
+<%= render partial: 'session_form',
+    locals: {path: sessions_path,
+             method: :post,
+             button_text: "Login"
+            }  %>
+ </section>
