@@ -23,8 +23,8 @@ class UsersController < ApplicationController
       flash[:success] = "Your profile has been updated"
       redirect_to "/profile"
     else
-      flash[:error] = "Something went wrong"
-      render :edit
+      flash[:error] = "Email has already been taken"
+      redirect_to "/users/#{@user.id}/edit"
     end
   end
   
