@@ -47,7 +47,7 @@ RSpec.describe 'User Login-Logout' do
         expect(page).to have_content(@order1.updated_at)
         expect(page).to have_content(@order1.status)
         expect(page).to have_content("pending")
-        expect(page).to have_content(@order1.item_quantity)
+        expect(page).to have_content(@order1.total_items)
         expect(page).to have_content(@order1.grandtotal)
       end
       within("#order-#{@order2.id}")do
@@ -59,7 +59,7 @@ RSpec.describe 'User Login-Logout' do
         expect(page).to have_content(@order2.updated_at)
         expect(page).to have_content(@order2.status)
         expect(page).to have_content("pending")
-        expect(page).to have_content(@order2.item_quantity)
+        expect(page).to have_content(@order2.total_items)
         expect(page).to have_content(@order2.grandtotal)
       end
 

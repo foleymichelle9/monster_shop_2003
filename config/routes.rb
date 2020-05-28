@@ -47,5 +47,6 @@ Rails.application.routes.draw do
   resources :profile, only: [:show] do
     resources :orders, only: [:index]
   end
+  get '/profile/orders/:id', to: 'orders#show'
 
 end

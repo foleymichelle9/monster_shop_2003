@@ -8,7 +8,7 @@ class Order <ApplicationRecord
     item_orders.sum('price * quantity')
   end
 
-  def item_quantity
+  def total_items
     items.sum(:quantity)
   end
   
