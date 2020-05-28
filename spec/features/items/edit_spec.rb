@@ -35,7 +35,7 @@ RSpec.describe "As a Visitor" do
         fill_in 'Description', with: "They're a bit more expensive, and they kinda do pop sometimes, but whatevs.. this is retail."
         fill_in 'Image', with: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588"
         fill_in 'Inventory', with: 11
-
+        
         click_button "Update Item"
 
         expect(current_path).to eq("/items/#{@tire.id}")
