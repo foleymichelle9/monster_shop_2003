@@ -82,12 +82,3 @@ RSpec.describe 'password edit page', type: :feature do
     expect(page).to have_content("Your password has been updated")
   end 
 end
-
-# User Story 22, User Editing Profile Data must have unique Email address
-
-# As a registered user
-# When I attempt to edit my profile data
-# If I try to change my email address to one that belongs to another user
-# When I submit the form
-# Then I am returned to the profile edit page
-# And I see a flash message telling me that email address is already in use
