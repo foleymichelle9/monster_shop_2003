@@ -150,6 +150,8 @@ RSpec.describe 'User Login-Logout' do
         fill_in :password, with: @password
         click_button "Login"
       end
+      
+      
 
       visit '/logout'
       expect(current_path).to eq('/')
