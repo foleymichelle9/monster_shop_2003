@@ -1,11 +1,11 @@
 FactoryBot.define do
   factory :item do
-    name { Faker::Commerce.product_name }
-    description { Faker::Commerce.material }
-    price { Faker::Number.number(digits: 2) }
+    sequence(:name) {|n| "Item #{n}" }
+    sequence(:description) {|n| "Description #{n}" }
+    sequence(:price, (1..100).cycle) { |n| 1 + n }
     sequence(:image) { |n| "http://img.com/#{1 + n}" }
     active? { true }
-    inventory { Faker::Number.number(digits: 2) }
+    sequence(:inventory, (1..100).cycle) { |n| 1 + n }
     merchant
   end
 end
