@@ -1,1 +1,13 @@
 <h1>Orders Index</h1>
+
+<% @orders.each do |order| %>
+  <section id="order-<%= order.id %>">
+    <h3><%= link_to "#{order.id}", "/orders/#{order.id}" %></h3>
+    <p><%=order.name %></p>
+    <p><%=order.created_at %></p>
+    <p><%=order.updated_at %></p>
+    <p><%=order.status %></p>
+    <p><%=order.item_quantity %></p>
+    <p><%=order.grandtotal %></p>
+  </section>
+<% end %>

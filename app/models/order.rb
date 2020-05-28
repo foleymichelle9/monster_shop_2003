@@ -7,4 +7,11 @@ class Order <ApplicationRecord
   def grandtotal
     item_orders.sum('price * quantity')
   end
+
+  def item_quantity
+    items.sum(:quantity)
+  end
+  
+
+  enum status: {pending: 0, packaged: 1, shipped: 2, cancelled: 3}
 end

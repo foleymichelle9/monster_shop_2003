@@ -18,8 +18,8 @@ RSpec.describe 'User Login-Logout' do
     
   end
 
-  describe "US26 part2" do
-    it "profile displays a MY ORDERS link" do
+  describe "US27" do
+    it "profile displays a MY ORDERS link if orders" do
       visit '/profile'
 
       expect(page).to_not have_link("My Orders")
