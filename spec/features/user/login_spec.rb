@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "As a visitor", type: :feature do 
+RSpec.describe "As a visitor", type: :feature do
   describe "When I click on the 'register' link in the nav bar" do
     before(:each) do
       @user_info1 = {name: "Mike Dao",
@@ -27,18 +27,18 @@ RSpec.describe "As a visitor", type: :feature do
 
       expect(current_path).to eq('/register')
 
-      fill_in "Name",	with: "John" 
-      fill_in "Address",	with: "123 Test St." 
-      fill_in "City",	with: "Denver" 
-      fill_in "State",	with: "Colorado" 
-      fill_in "Zip",	with: "80234" 
-      fill_in "Email",	with: "123test@email.com" 
-      fill_in "Password",	with: "password123" 
-      fill_in "Confirm Password",	with: "password123" 
+      fill_in "Name",	with: "John"
+      fill_in "Address",	with: "123 Test St."
+      fill_in "City",	with: "Denver"
+      fill_in "State",	with: "Colorado"
+      fill_in "Zip",	with: "80234"
+      fill_in "Email",	with: "123test@email.com"
+      fill_in "Password",	with: "password123"
+      fill_in "Confirm Password",	with: "password123"
 
       click_on 'Submit Form'
 
-      expect(current_path).to eq("/profile") 
+      expect(current_path).to eq("/profile")
 
     end
 
@@ -49,18 +49,18 @@ RSpec.describe "As a visitor", type: :feature do
 
       expect(current_path).to eq('/register')
 
-      fill_in "Name",	with: "John" 
-      fill_in "Address",	with: "123 Test St." 
-      fill_in "City",	with: "Denver" 
-      fill_in "State",	with: "Colorado" 
-      fill_in "Zip",	with: "80234" 
-      fill_in "Email",	with: "test@email.com" 
-      fill_in "Password",	with: "password123" 
-      fill_in "Confirm Password",	with: "123pass" 
+      fill_in "Name",	with: "John"
+      fill_in "Address",	with: "123 Test St."
+      fill_in "City",	with: "Denver"
+      fill_in "State",	with: "Colorado"
+      fill_in "Zip",	with: "80234"
+      fill_in "Email",	with: "test@email.com"
+      fill_in "Password",	with: "password123"
+      fill_in "Confirm Password",	with: "123pass"
 
       click_on 'Submit Form'
 
-      expect(current_path).to eq("/register") 
+      expect(current_path).to eq("/register")
       expect(page).to have_content("Passwords did not match.")
 
     end
@@ -109,8 +109,8 @@ RSpec.describe "As a visitor", type: :feature do
       fill_in :password_confirmation,	with: @user_info2[:password]
       click_button "Submit"
 
-      expect(current_path).to eq("/register") 
+      expect(current_path).to eq("/register")
       expect(page).to have_content("zip can't be blank, please try again.")
-    end  
+    end
   end
 end

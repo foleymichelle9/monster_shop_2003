@@ -20,6 +20,13 @@ class UsersController < ApplicationController
       flash[:notice] = "#{missing_params(user_params).join(", ")} can't be blank, please try again."
       render :new
     end
+
+    # def show
+    #   if current_user
+    #     user = User.find(current_user.id)
+    #     flash[:success] = "Logged in as #{user.name}"
+    #   end
+    # end
   end
 
   private
@@ -41,4 +48,4 @@ class UsersController < ApplicationController
     end
     missing_params
   end
-end 
+end
