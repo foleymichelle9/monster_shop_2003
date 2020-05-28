@@ -4,3 +4,10 @@
 <%= @user.state%>
 <%= @user.zip%>
 <%= @user.email%>
+
+
+<section id="my-orders">
+  <% if !@orders.empty? %>
+  <%= link_to 'My Orders', '/profile/orders' %>
+  <% end %>
+</section>

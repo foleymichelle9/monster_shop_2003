@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   get "/orders/new", to: "orders#new"
   post "/orders", to: "orders#create"
   get "/orders/:id", to: "orders#show"
+  get '/profile/orders', to: "orders#index"
   
   get "/register", to: "users#new"
   post "/register", to: "users#create"
@@ -42,4 +43,5 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create]
   get '/login', to: 'sessions#new'
   get '/logout', to: 'sessions#destroy'
+
 end
