@@ -34,7 +34,12 @@ Rails.application.routes.draw do
   get "/orders/new", to: "orders#new"
   post "/orders", to: "orders#create"
   get "/orders/:id", to: "orders#show"
+<<<<<<< HEAD
 
+=======
+  get '/profile/orders', to: "orders#index"
+  
+>>>>>>> master
   get "/register", to: "users#new"
   post "/register", to: "users#create"
 
@@ -43,4 +48,10 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create]
   get '/login', to: 'sessions#new'
   get '/logout', to: 'sessions#destroy'
+
+  resources :profile, only: [:show] do
+    resources :orders, only: [:index]
+  end
+  get '/profile/orders/:id', to: 'orders#show'
+
 end
