@@ -7,7 +7,7 @@ RSpec.describe 'profile edit page', type: :feature do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
     
-    visit profile_path(@user1)
+    visit "/profile"
 
     click_link "Edit Profile"
   end
@@ -43,15 +43,38 @@ RSpec.describe 'profile edit page', type: :feature do
     expect(page).to have_content("newemail@test.com")
   end
 end
+RSpec.describe 'password edit page', type: :feature do
+  before(:each) do
+
+    @user1 = create(:user)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
+    
+    visit "/profile"
+
+    click_link "Edit Password"
+  end
+
+  it 'allows user to edit their password' do
+
+    fill_in :password, with: "new password"
+    fill_in :password_confirmation,	with: "new password"
+
+    click_button "Submit"
+
+    expect(current_path).to eq("/profile")
+    expect(page).to have_content("Your password has been updated")
+  end 
+end
+
+# User Story 21, User Can Edit their Password
 
 # As a registered user
 # When I visit my profile page
-# I see a link to edit my profile data
-# When I click on the link to edit my profile data
-# I see a form like the registration page
-# The form is prepopulated with all my current information except my password
-# When I change any or all of that information
+# I see a link to edit my password
+# When I click on the link to edit my password
+# I see a form with fields for a new password, and a new password confirmation
+# When I fill in the same password in both fields
 # And I submit the form
 # Then I am returned to my profile page
-# And I see a flash message telling me that my data is updated
-# And I see my updated information
+# And I see a flash message telling me that my password is updated

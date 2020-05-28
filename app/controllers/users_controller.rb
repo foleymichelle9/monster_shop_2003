@@ -8,11 +8,18 @@ class UsersController < ApplicationController
     @user = User.find(params[:user_id])
   end
 
+  def edit_password
+    @user = User.find(params[:user_id])
+  end
+
   def update
     @user = User.find(params[:user_id])
     @user.update(user_params)
 
-    if @user.save
+    if @user.save && params[:password_confirmation]
+      flash[:success] = "Your password has been updated"
+      redirect_to "/profile"
+    elsif @user.save
       flash[:success] = "Your profile has been updated"
       redirect_to "/profile"
     else
