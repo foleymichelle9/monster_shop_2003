@@ -37,6 +37,10 @@ Rails.application.routes.draw do
   
   get "/register", to: "users#new"
   post "/register", to: "users#create"
-
+          
   get "/profile", to: "profiles#show"
+
+  resources :sessions, only: [:create]
+  get '/login', to: 'sessions#new'
+  get '/logout', to: 'sessions#destroy'
 end
