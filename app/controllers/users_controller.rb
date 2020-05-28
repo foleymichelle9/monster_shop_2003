@@ -9,10 +9,10 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = User.find(params[:user_id])
-    user.update(user_params)
+    @user = User.find(params[:user_id])
+    @user.update(user_params)
 
-    if user.save
+    if @user.save
       flash[:success] = "Your profile has been updated"
       redirect_to "/profile"
     else

@@ -23,22 +23,22 @@ RSpec.describe 'profile edit page', type: :feature do
     expect(page).to_not have_field(:password)
     expect(page).to_not have_field(:password_confirmation)
 
-    fill_in :name, with: "New name"
-    fill_in :address, with: "New address"
-    fill_in :city, with: "New city"
-    fill_in :state, with: "New state"
+    fill_in :name, with: "new name"
+    fill_in :address, with: "new address"
+    fill_in :city, with: "new city"
+    fill_in :state, with: "new state"
     fill_in :zip, with: 12345
     fill_in :email, with: "newemail@test.com"
 
     click_button "Submit Form"
 
-    expect(current_path).to eq(profile_path(@user1))
+    expect(current_path).to eq("/profile")
     expect(page).to have_content("Your profile has been updated")
 
-    expect(page).to have_content("New Name")
-    expect(page).to have_content("New address")
-    expect(page).to have_content("New city")
-    expect(page).to have_content("New state")
+    expect(page).to have_content("new name")
+    expect(page).to have_content("new address")
+    expect(page).to have_content("new city")
+    expect(page).to have_content("new state")
     expect(page).to have_content(12345)
     expect(page).to have_content("newemail@test.com")
   end
