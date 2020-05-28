@@ -4,6 +4,7 @@ RSpec.describe 'profile edit page', type: :feature do
   before(:each) do
 
     @user1 = create(:user)
+
     @user2 = create(:user, email: "newemail@test.com")
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
@@ -29,19 +30,24 @@ RSpec.describe 'profile edit page', type: :feature do
     fill_in :city, with: "new city"
     fill_in :state, with: "new state"
     fill_in :zip, with: 12345
-    fill_in :email, with: "newemail@test.com"
-
+    fill_in :email, with: "testemail@testemail.com"
+    
     click_button "Submit Form"
 
     expect(current_path).to eq("/profile")
+
     expect(page).to have_content("Your profile has been updated")
+    visit current_path
+
+    @user1.reload
 
     expect(page).to have_content("new name")
     expect(page).to have_content("new address")
     expect(page).to have_content("new city")
     expect(page).to have_content("new state")
+    expect(page).to have_content("new state")
     expect(page).to have_content(12345)
-    expect(page).to have_content("newemail@test.com")
+    expect(page).to have_content("testemail@testemail.com")
   end
 
   it 'will not let user change e-mail if new e-mail address is already in use' do
