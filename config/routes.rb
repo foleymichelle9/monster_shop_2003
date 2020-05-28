@@ -39,5 +39,7 @@ Rails.application.routes.draw do
           
   get "/profile", to: "profiles#show"
 
-  resources :sessions, only: [:new, :create]
+  resources :sessions, only: [:create]
+  get '/login', to: 'sessions#new'
+  get '/logout', to: 'sessions#destroy'
 end
