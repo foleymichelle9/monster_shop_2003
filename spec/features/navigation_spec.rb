@@ -39,16 +39,39 @@ RSpec.describe 'Site Navigation' do
       expect(current_path).to eq('/register')
 
       within 'nav' do
-        click_link "Homepage"
+        click_link "Home"
       end
 
       expect(current_path).to eq('/')
+      regular1 = create(:user, email: 'regular@email.com')
+      password = 'p123'
+
+
+      visit '/login'
 
       within 'nav' do
-        click_link "Login"
+        expect(page).to have_content("Login")
+        expect(page).to_not have_content("Profile")
+        expect(page).to_not have_content("Logout")
       end
 
-      expect(current_path).to eq('/login')
+      within("#login-form")do
+        fill_in :email, with: regular1.email
+        fill_in :password, with: password
+
+        click_button "Login"
+
+      end
+      save_and_open_page
+      
+      within 'nav' do
+        expect(page).to_not have_content("Login")
+        expect(page).to have_content("Profile")
+        expect(page).to have_content("Logout")
+        click_link "Logout"
+      end
+
+      expect(current_path).to eq('/')
     end
   end
 end
