@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :merchant do
-    name { Faker::Company.name }
-    address { Faker::Address.street_address }
-    city { Faker::Address.city }
-    state { Faker::Address.state }
-    zip { Faker::Number.number(digits: 5) }
+    sequence(:name) {|n| "Merchant #{n}" }
+    sequence(:address) {|n| "Address #{n}" }
+    sequence(:city) {|n| "City #{n}" }
+    sequence(:state) { |n| "State #{n}" }
+    sequence(:zip, (11111..99999).cycle) { |n| 1 + n }
   end
 end

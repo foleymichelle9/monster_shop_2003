@@ -14,7 +14,7 @@ RSpec.describe 'profile edit page', type: :feature do
     click_link "Edit Profile"
   end
 
-  it 'shows prepopulated form that user is able to change' do
+  xit 'shows prepopulated form that user is able to change' do
 
     expect(page).to have_field(:name, :with => @user1.name)
     expect(page).to have_field(:address, :with => @user1.address)
@@ -37,7 +37,6 @@ RSpec.describe 'profile edit page', type: :feature do
     expect(current_path).to eq("/profile")
 
     expect(page).to have_content("Your profile has been updated")
-    visit current_path
 
     @user1.reload
 
