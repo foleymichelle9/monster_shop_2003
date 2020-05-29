@@ -63,21 +63,20 @@ RSpec.describe 'Cart show' do
         visit "/cart"
 
         within "#cart-item-#{@paper.id}" do
-          within "##{item.id}-quantity" do 
+          within "##{@paper.id}-quantity" do 
             expect(page).to have_content("2")
           end
           expect(page).to have_link("+") 
           click_link("+")
         end
 
-      #   visit "/cart"
-
-      #   within "#cart-item-#{@paper.id}" do 
-      #     expect(page).to have_content("2")
-      #   end
+        expect(current_path).to eq("/cart") 
+        within "##{@paper.id}-quantity" do 
+          expect(page).to have_content("3")
+        end
       end
 
-      xit "I can decrement my cart item by one" do
+      it "I can decrement my cart item by one" do
         visit "/cart"
 
         within "#cart-item-#{@tire.id}" do
@@ -86,18 +85,21 @@ RSpec.describe 'Cart show' do
           end
         end
 
-        visit "/cart"
-          within "#cart-item-#{@tire.id}" do
+        within "#cart-item-#{@tire.id}" do
+          within "##{@tire.id}-quantity" do 
             expect(page).to have_content("2")
-            click_link "-"
           end
+          expect(page).to have_link("-") 
+          click_link("-")
+        end
 
-          visit "/cart"
-
-          within "#cart-item-#{@tire.id}" do
+        within "#cart-item-#{@tire.id}" do
+          within "##{@tire.id}-quantity" do 
             expect(page).to have_content("1")
-            click_link "-"
           end
+          expect(page).to have_link("-") 
+          click_link("-")
+        end
         expect(page).to have_no_content(@tire.name)
       end
     end
