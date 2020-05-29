@@ -32,8 +32,16 @@ class Cart
     end
   end
 
+  def remove_item(item_id)
+    @contents[item_id] -= 1
+  end
+
   def limit_reached?(item)
     @contents[item] >= Item.find(item).inventory
+  end
+
+  def quantity_one?(item_id)
+    @contents[item_id] == 1
   end
 
   def quantity_zero?(item)
