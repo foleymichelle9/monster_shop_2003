@@ -62,7 +62,6 @@ RSpec.describe 'Site Navigation' do
         click_button "Login"
 
       end
-      save_and_open_page
       
       within 'nav' do
         expect(page).to_not have_content("Login")
