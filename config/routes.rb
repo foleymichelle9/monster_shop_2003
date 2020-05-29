@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   post "/orders", to: "orders#create"
   get "/orders/:id", to: "orders#show"
   get '/profile/orders', to: "orders#index"
-  
+
   get "/register", to: "users#new"
   post "/register", to: "users#create"
 
@@ -50,4 +50,7 @@ Rails.application.routes.draw do
   end
   get '/profile/orders/:id', to: 'orders#show'
 
+  namespace :admin do
+    get '/dashboard', to: "dashboard#index"
+  end
 end

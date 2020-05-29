@@ -15,7 +15,7 @@
     end
 
 
-    private 
+    private
 
     def authenticate(user)
       if user && user.authenticate(params[:password])
@@ -31,11 +31,12 @@
     def redirect_user
       return if session[:user_id].nil?
       user = User.find(session[:user_id])
+
       redirect_to ("/profile") if user.role == "regular"
       redirect_to ("/merchant") if user.role == "merchant"
-      redirect_to ("/admin") if user.role == "admin"
+      redirect_to ("/admin/dashboard") if user.role == "admin"
     end
-    
+
 
 
 
