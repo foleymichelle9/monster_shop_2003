@@ -3,7 +3,9 @@ class CartController < ApplicationController
     item = Item.find(params[:item_id])
     cart.add_item(item.id.to_s)
     flash[:success] = "#{item.name} was successfully added to your cart"
-    redirect_to "/items"
+    
+    redirect_to "/items" if params[:cart].nil?
+    redirect_to "/cart" if params[:cart]
   end
 
   def show
@@ -20,15 +22,12 @@ class CartController < ApplicationController
     redirect_to '/cart'
   end
 
-  def increment_decrement
-    if params[:increment_decrement] == "increment"
-      cart.add_item(params[:item_id]) unless cart.limit_reached?(params[:item_id])
-    elsif params[:increment_decrement] == "decrement"
+  def decrement
+    if !cart.quantity_one?(params[:item_id])
       cart.remove_item(params[:item_id])
-      return remove_item if cart.quantity_zero?(params[:item_id])
+      redirect_to "/cart"
+    elsif cart.quantity_one?(params[:item_id])
+      remove_item
     end
-    redirect_to "/cart"
   end
-
-
 end
