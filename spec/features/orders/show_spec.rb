@@ -24,7 +24,7 @@ RSpec.describe 'User Login-Logout' do
     @order2 = create(:order, name: "ANN") 
 
     @item_order100 = ItemOrder.create(order: @order1, item: @item100, price: 1, quantity: 100, status: 1)
-    @item_order110 = ItemOrder.create(order: @order1, item: @item110, price: 11, quantity: 110), status: 0)
+    @item_order110 = ItemOrder.create(order: @order1, item: @item110, price: 11, quantity: 110, status: 0)
     @item_order111 = ItemOrder.create(order: @order1, item: @item111, price: 111, quantity: 111, status: 1)
     ItemOrder.create(order: @order2, item: @item200, price: 2, quantity: 200)
     ItemOrder.create(order: @order2, item: @item220, price: 22, quantity: 220)
