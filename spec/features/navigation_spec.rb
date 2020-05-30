@@ -62,8 +62,6 @@ RSpec.describe 'Site Navigation' do
         click_button "Login"
 
       end
-
-
       within 'nav' do
         expect(page).to_not have_content("Login")
         expect(page).to have_content("Profile")
