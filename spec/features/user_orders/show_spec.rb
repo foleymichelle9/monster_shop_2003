@@ -13,9 +13,9 @@ RSpec.describe 'User Login-Logout' do
     @merchant1 = create(:merchant)
     @merchant2 = create(:merchant)
 
-    @item100 = create(:item, merchant: @merchant1, price: 1)
-    @item110 = create(:item, merchant: @merchant1, price: 11)
-    @item111 = create(:item, merchant: @merchant1, price: 111)
+    @item100 = create(:item, merchant: @merchant1, price: 1, inventory: 100)
+    @item110 = create(:item, merchant: @merchant1, price: 11, inventory: 100)
+    @item111 = create(:item, merchant: @merchant1, price: 111, inventory: 100)
     @item200 = create(:item, merchant: @merchant2, price: 2)
     @item220 = create(:item, merchant: @merchant2, price: 22)
     @item222 = create(:item, merchant: @merchant2, price: 222)
@@ -99,15 +99,17 @@ RSpec.describe 'User Login-Logout' do
   end
 
   describe "US30"do
-    xit "user cancels an order and items are unfulfilled and returned to their inventory" do
+    it "user cancels an order and items are unfulfilled and returned to their inventory" do
       visit '/items'
-      within("#item-#{@item.id}")do
-        expect(page).to have_content("Inventory: 3")
+      within("#item-#{@item100.id}")do
+        expect(page).to have_content("Inventory: 100")
       end
-      within("#item-#{@tire.id}")do
-        expect(page).to have_content("Inventory: 13")
+      within("#item-#{@item110.id}")do
+        expect(page).to have_content("Inventory: 100")
       end
-
+      within("#item-#{@item111.id}")do
+        expect(page).to have_content("Inventory: 100")
+      end
 
       visit "/profile/orders/#{@order1.id}"
 
@@ -130,7 +132,16 @@ RSpec.describe 'User Login-Logout' do
       expect(current_path).to eq("/profile")
       expect(page).to have_content("Order #{@order1.id} has been cancelled")
 
-      visit
+      visit '/items'
+      within("#item-#{@item100.id}")do
+        expect(page).to have_content("Inventory: 111")
+      end
+      within("#item-#{@item110.id}")do
+        expect(page).to have_content("Inventory: 112")
+      end
+      within("#item-#{@item111.id}")do
+        expect(page).to have_content("Inventory: 113")
+      end
 
       visit "/profile/orders/#{@order1.id}"
       within("#order-#{@order1.id}")do
@@ -146,18 +157,6 @@ RSpec.describe 'User Login-Logout' do
         expect(page).to have_content("Status: unfulfilled")
       end
 
-      visit '/items'
-      within("#item-#{@paper.id}")do
-        expect(page).to have_content("Inventory: 1")
-      end
-      within("#item-#{@tire.id}")do
-        expect(page).to have_content("Inventory: 11")
-      end
-
-
-
-
-
     end
     
   end
@@ -170,10 +169,10 @@ end
 # When I visit an order's show page
 # I see a button or link to cancel the order
 # When I click the cancel button for an order, the following happens:
-# - Each row in the "order items" table is given a status of "unfulfilled"
-# - The order itself is given a status of "cancelled"
-# - Any item quantities in the order that were previously fulfilled have 
+# x- Each row in the "order items" table is given a status of "unfulfilled"
+# x- The order itself is given a status of "cancelled"
+# x- Any item quantities in the order that were previously fulfilled have 
     # their quantities returned to their respective merchant's inventory for that item.
-# - I am returned to my profile page
-# - I see a flash message telling me the order is now cancelled
-# - And I see that this order now has an updated status of "cancelled"
+# x- I am returned to my profile page
+# x- I see a flash message telling me the order is now cancelled
+# x- And I see that this order now has an updated status of "cancelled"
