@@ -16,20 +16,19 @@ RSpec.describe 'User Login-Logout' do
     @item100 = create(:item, merchant: @merchant1, price: 1)
     @item110 = create(:item, merchant: @merchant1, price: 11)
     @item111 = create(:item, merchant: @merchant1, price: 111)
-    @item200 = create(:item, merchant: @merchant2)
-    @item220 = create(:item, merchant: @merchant2)
-    @item222 = create(:item, merchant: @merchant2)
+    @item200 = create(:item, merchant: @merchant2, price: 2)
+    @item220 = create(:item, merchant: @merchant2, price: 22)
+    @item222 = create(:item, merchant: @merchant2, price: 222)
 
     @order1 = create(:order, name: "BOB", user: @regular2)      
     @order2 = create(:order, name: "ANN", user: @regular2) 
 
-    @item_order100 = ItemOrder.create(order: @order1, item: @item100, price: 1, quantity: 100, status: 1)
-    @item_order110 = ItemOrder.create(order: @order1, item: @item110, price: 11, quantity: 110, status: 0)
-    @item_order111 = ItemOrder.create(order: @order1, item: @item111, price: 111, quantity: 111, status: 1)
-    ItemOrder.create(order: @order2, item: @item200, price: 2, quantity: 200)
-    ItemOrder.create(order: @order2, item: @item220, price: 22, quantity: 220)
-    ItemOrder.create(order: @order2, item: @item222, price: 222, quantity: 222)
-    
+    @item_order100 = ItemOrder.create(order: @order1, item: @item100, price: @item100.price, quantity: 11, status: 1)
+    @item_order110 = ItemOrder.create(order: @order1, item: @item110, price: @item110.price, quantity: 12, status: 0)
+    @item_order111 = ItemOrder.create(order: @order1, item: @item111, price: @item111.price, quantity: 13, status: 1)
+    ItemOrder.create(order: @order2, item: @item200, price: @item200.price, quantity: 21)
+    ItemOrder.create(order: @order2, item: @item220, price: @item220.price, quantity: 22)
+    ItemOrder.create(order: @order2, item: @item222, price: @item222.price, quantity: 23)
   end
 
   describe "US29" do
@@ -67,7 +66,6 @@ RSpec.describe 'User Login-Logout' do
         expect(page).to have_content(@item_order100.quantity)
         expect(page).to_not have_content(@item_order110.quantity)
         expect(page).to have_content(@item100.price)
-        expect(page).to_not have_content(@item110.price)
         expect(page).to have_content(@item_order100.subtotal)
         expect(page).to_not have_content(@item_order110.subtotal)
       end
@@ -78,7 +76,7 @@ RSpec.describe 'User Login-Logout' do
         expect(page).to have_content(@item110.description)
         expect(page).to have_content(@item_order110.quantity)
         expect(page).to have_content(@item110.price)
-        expect(page).to have_content("$1,210.00")
+        expect(page).to have_content("$132.00")
       end
 
       within("#item-#{@item_order111.item_id}")do
@@ -87,11 +85,11 @@ RSpec.describe 'User Login-Logout' do
         expect(page).to have_content(@item111.description)
         expect(page).to have_content(@item_order111.quantity)
         expect(page).to have_content(@item111.price)
-        expect(page).to have_content("$12,321.00")
+        expect(page).to have_content("$1,443.00")
       end
 
       within("#grandtotal")do
-        expect(page).to have_content("Total: $13,631.00")
+        expect(page).to have_content("Total: $1,586.00")
       end
       within("#total_items")do
         expect(page).to have_content(@order1.total_items)
@@ -101,7 +99,16 @@ RSpec.describe 'User Login-Logout' do
   end
 
   describe "US30"do
-    it "user cancels an order and items are unfulfilled and returned to their inventory" do
+    xit "user cancels an order and items are unfulfilled and returned to their inventory" do
+      visit '/items'
+      within("#item-#{@item.id}")do
+        expect(page).to have_content("Inventory: 3")
+      end
+      within("#item-#{@tire.id}")do
+        expect(page).to have_content("Inventory: 13")
+      end
+
+
       visit "/profile/orders/#{@order1.id}"
 
       within("#order-#{@order1.id}")do
@@ -120,8 +127,12 @@ RSpec.describe 'User Login-Logout' do
       within("#cancel-order")do
         click_link "Cancel Order"
       end
-      expect(current_path).to eq("/profile/orders/#{@order1.id}")
+      expect(current_path).to eq("/profile")
+      expect(page).to have_content("Order #{@order1.id} has been cancelled")
 
+      visit
+
+      visit "/profile/orders/#{@order1.id}"
       within("#order-#{@order1.id}")do
         expect(page).to have_content("Order Status: cancelled")
       end
@@ -133,6 +144,14 @@ RSpec.describe 'User Login-Logout' do
       end
       within("#item-#{@item_order111.item_id}")do
         expect(page).to have_content("Status: unfulfilled")
+      end
+
+      visit '/items'
+      within("#item-#{@paper.id}")do
+        expect(page).to have_content("Inventory: 1")
+      end
+      within("#item-#{@tire.id}")do
+        expect(page).to have_content("Inventory: 11")
       end
 
 

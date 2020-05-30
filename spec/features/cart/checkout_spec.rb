@@ -19,6 +19,7 @@ RSpec.describe 'Cart show' do
     end
 
     it 'Theres a link to checkout' do
+
       visit "/cart"
 
       expect(page).to have_link("Checkout")

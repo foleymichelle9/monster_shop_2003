@@ -60,6 +60,8 @@ RSpec.describe("New Order Page") do
     end
 
     it "I see a form where I can enter my shipping info" do
+      expect(@paper.inventory).to eq(3)
+      expect(@tire.inventory).to eq(12)
       visit "/cart"
       click_on "Checkout"
 
@@ -68,7 +70,24 @@ RSpec.describe("New Order Page") do
       expect(page).to have_field(:city)
       expect(page).to have_field(:state)
       expect(page).to have_field(:zip)
+
+      fill_in "name",	with: "sometext" 
+      fill_in "address",	with: "sometext" 
+      fill_in "city",	with: "sometext" 
+      fill_in "state",	with: "sometext" 
+      fill_in "zip",	with: "sometext" 
       expect(page).to have_button("Create Order")
+      click_button "Create Order"
+      
+      visit '/items'
+      within("#item-#{@paper.id}")do
+        expect(page).to have_content("Inventory: 1")
+      end
+      within("#item-#{@tire.id}")do
+        expect(page).to have_content("Inventory: 11")
+      end
+ 
     end
+    
   end
 end
