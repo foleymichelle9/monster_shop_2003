@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   resources :profile, only: [:show] do
     resources :orders, only: [:index]
   end
+  
   get '/profile/orders/:id', to: 'orders#show'
 
   namespace :admin do
@@ -62,5 +63,6 @@ Rails.application.routes.draw do
 
   namespace :merchant do
     get '/dashboard', to: "dashboard#show"
+    get '/items', to: 'items#index'
   end
 end

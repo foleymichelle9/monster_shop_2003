@@ -43,11 +43,3 @@ end
 # - the date the order was made
 # - the total quantity of my items in the order
 # - the total value of my items for that order
-
-# User Story 36, Merchant's Items index page
-
-# As a merchant employee
-# When I visit my merchant dashboard
-# I see a link to view my own items
-# When I click that link
-# My URI route should be "/merchant/items"

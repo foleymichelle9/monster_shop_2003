@@ -6,3 +6,5 @@
 <p><%= @user.merchant.state %></p>
 <p><%= @user.merchant.zip %></p>
 </center>
+
+<%= link_to "Items for #{@user.merchant.name}", "/merchant/items" %>
