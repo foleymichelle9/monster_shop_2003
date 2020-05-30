@@ -1,4 +1,6 @@
 class User < ApplicationRecord 
+  belongs_to :merchant
+
   validates_presence_of :name, :address, :city, :state, :zip
 
   validates_presence_of :password, require: true, confirmation: true, allow_nil: true
