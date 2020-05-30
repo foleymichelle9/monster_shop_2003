@@ -19,6 +19,9 @@
       <%= link_to "Login", "/login" if !current_user %>
       <%= link_to "Profile", "/profile" if current_user %>
       <%= link_to "Logout", "/logout" if current_user %>
+    
+      <%= link_to "Dashboard", "/admin/dashboard" if current_user && current_user.role == "admin" %>
+
     </nav>
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">
