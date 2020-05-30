@@ -50,6 +50,6 @@ class MerchantsController <ApplicationController
   end
 
   def current_user_is_admin?
-    current_user.role == "admin"
+    current_user.role == "admin" if current_user
   end 
 end
