@@ -20,8 +20,8 @@ RSpec.describe 'User Login-Logout' do
     @item220 = create(:item, merchant: @merchant2)
     @item222 = create(:item, merchant: @merchant2)
 
-    @order1 = create(:order, name: "BOB")      
-    @order2 = create(:order, name: "ANN") 
+    @order1 = create(:order, name: "BOB", user: @regular2)      
+    @order2 = create(:order, name: "ANN", user: @regular2) 
 
     @item_order100 = ItemOrder.create(order: @order1, item: @item100, price: 1, quantity: 100, status: 1)
     @item_order110 = ItemOrder.create(order: @order1, item: @item110, price: 11, quantity: 110, status: 0)
@@ -29,6 +29,17 @@ RSpec.describe 'User Login-Logout' do
     ItemOrder.create(order: @order2, item: @item200, price: 2, quantity: 200)
     ItemOrder.create(order: @order2, item: @item220, price: 22, quantity: 220)
     ItemOrder.create(order: @order2, item: @item222, price: 222, quantity: 222)
+    
+  end
+
+  describe "US28"do
+    it "order index page has details" do
+      binding.pry
+
+
+      visit '/profile/orders'
+      
+    end
     
   end
 

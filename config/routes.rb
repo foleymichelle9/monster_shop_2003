@@ -49,10 +49,11 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new'
   get '/logout', to: 'sessions#destroy'
 
-  resources :profile, only: [:show] do
-    resources :orders, only: [:index]
-  end
-  get '/profile/orders/:id', to: 'orders#show'
+  # resources :profile, only: [:show] do
+  #   resources :orders, only: [:index]
+  # end
+  get '/profile/orders', to: 'user_orders#index'
+  get '/profile/orders/:id', to: 'user_orders#show'
 
   namespace :admin do
     get '/dashboard', to: "dashboard#index"
