@@ -35,7 +35,6 @@ Rails.application.routes.draw do
   post "/orders", to: "orders#create"
   get "/orders/:id", to: "orders#show"
 
-  get '/profile/orders', to: "orders#index"
 
   get "/register", to: "users#new"
   post "/register", to: "users#create"
@@ -43,17 +42,17 @@ Rails.application.routes.draw do
   get "/users/:user_id/edit_password", to: "users#edit_password"
   patch "/users/:user_id", to: "users#update"
 
+
   get "/profile", to: "profiles#show"
 
   resources :sessions, only: [:create]
   get '/login', to: 'sessions#new'
   get '/logout', to: 'sessions#destroy'
 
-  # resources :profile, only: [:show] do
-  #   resources :orders, only: [:index]
-  # end
+
   get '/profile/orders', to: 'user_orders#index'
   get '/profile/orders/:id', to: 'user_orders#show'
+  patch "/profile/orders/:id", to: "user_orders#update"
 
   namespace :admin do
     get '/dashboard', to: "dashboard#index"

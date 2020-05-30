@@ -32,24 +32,13 @@ RSpec.describe 'User Login-Logout' do
     
   end
 
-  describe "US28"do
-    it "order index page has details" do
-      binding.pry
-
-
-      visit '/profile/orders'
-      
-    end
-    
-  end
-
   describe "US29" do
     it "order show page has details" do
       visit profile_orders_path
       expect(current_path).to eq('/profile/orders') 
 
       within("#order-#{@order1.id}")do
-        click_link(@order1.id)
+        click_link("#{@order1.id}")
       end
 
       expect(current_path).to eq("/profile/orders/#{@order1.id}")
@@ -113,8 +102,41 @@ RSpec.describe 'User Login-Logout' do
 
   describe "US30"do
     it "user cancels an order and items are unfulfilled and returned to their inventory" do
-      visit profile_orders_path
-      expect(current_path).to eq('/profile/orders') 
+      visit "/profile/orders/#{@order1.id}"
+
+      within("#order-#{@order1.id}")do
+        expect(page).to have_content("Order Status: pending")
+      end
+      within("#item-#{@item_order100.item_id}")do
+        expect(page).to have_content("Status: fulfilled")
+      end
+      within("#item-#{@item_order110.item_id}")do
+        expect(page).to have_content("Status: unfulfilled")
+      end
+      within("#item-#{@item_order111.item_id}")do
+        expect(page).to have_content("Status: fulfilled")
+      end
+
+      within("#cancel-order")do
+        click_link "Cancel Order"
+      end
+      expect(current_path).to eq("/profile/orders/#{@order1.id}")
+
+      within("#order-#{@order1.id}")do
+        expect(page).to have_content("Order Status: cancelled")
+      end
+      within("#item-#{@item_order100.item_id}")do
+        expect(page).to have_content("Status: unfulfilled")
+      end
+      within("#item-#{@item_order110.item_id}")do
+        expect(page).to have_content("Status: unfulfilled")
+      end
+      within("#item-#{@item_order111.item_id}")do
+        expect(page).to have_content("Status: unfulfilled")
+      end
+
+
+
 
 
     end
