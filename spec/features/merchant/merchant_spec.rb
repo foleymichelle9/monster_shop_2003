@@ -58,8 +58,6 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
   end
 end
 
-
-
 # User Story 35, Merchant Dashboard displays Orders
 
 # As a merchant employee
@@ -72,9 +70,3 @@ end
 # - the date the order was made
 # - the total quantity of my items in the order
 # - the total value of my items for that order
-
-# As an admin user
-# When I visit the merchant index page ("/merchants")
-# And I click on a merchant's name,
-# Then my URI route should be ("/admin/merchants/6")
-# Then I see everything that merchant would see

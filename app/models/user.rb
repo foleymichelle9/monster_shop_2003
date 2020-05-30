@@ -1,4 +1,5 @@
 class User < ApplicationRecord 
+  has_many :orders
   belongs_to :merchant, optional: true
 
   validates_presence_of :name, :address, :city, :state, :zip
