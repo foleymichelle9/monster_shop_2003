@@ -23,9 +23,9 @@ RSpec.describe 'User Login-Logout' do
     @order1 = create(:order, name: "BOB")      
     @order2 = create(:order, name: "ANN") 
 
-    @item_order100 = ItemOrder.create(order: @order1, item: @item100, price: 1, quantity: 100)
-    @item_order110 = ItemOrder.create(order: @order1, item: @item110, price: 11, quantity: 110)
-    @item_order111 = ItemOrder.create(order: @order1, item: @item111, price: 111, quantity: 111)
+    @item_order100 = ItemOrder.create(order: @order1, item: @item100, price: 1, quantity: 100, status: 1)
+    @item_order110 = ItemOrder.create(order: @order1, item: @item110, price: 11, quantity: 110, status: 0)
+    @item_order111 = ItemOrder.create(order: @order1, item: @item111, price: 111, quantity: 111, status: 1)
     ItemOrder.create(order: @order2, item: @item200, price: 2, quantity: 200)
     ItemOrder.create(order: @order2, item: @item220, price: 22, quantity: 220)
     ItemOrder.create(order: @order2, item: @item222, price: 222, quantity: 222)
@@ -99,23 +99,29 @@ RSpec.describe 'User Login-Logout' do
 
     end  
   end
+
+  describe "US30"do
+    it "user cancels an order and items are unfulfilled and returned to their inventory" do
+      visit profile_orders_path
+      expect(current_path).to eq('/profile/orders') 
+
+
+    end
+    
+  end
 end
 
-# x As a registered user
-# x When I visit my Profile Orders page
-# x And I click on a link for order's show page
-# x My URL route is now something like "/profile/orders/15"
-# x I see all information about the order, including the following information:
-# x - the ID of the order
-# x - the date the order was made
-# x - the date the order was last updated
-# x - the current status of the order
-# - each item I ordered,
-  # x - including name, 
-  # x - description, 
-  # x - thumbnail, 
-  # x - quantity, 
-  # x - price and 
-  # x - subtotal
-# x - the total quantity of items in the whole order
-# x - the grand total of all items for that order
+
+# User Story 30, User cancels an order
+
+# As a registered user
+# When I visit an order's show page
+# I see a button or link to cancel the order
+# When I click the cancel button for an order, the following happens:
+# - Each row in the "order items" table is given a status of "unfulfilled"
+# - The order itself is given a status of "cancelled"
+# - Any item quantities in the order that were previously fulfilled have 
+    # their quantities returned to their respective merchant's inventory for that item.
+# - I am returned to my profile page
+# - I see a flash message telling me the order is now cancelled
+# - And I see that this order now has an updated status of "cancelled"

@@ -5,5 +5,6 @@ FactoryBot.define do
     sequence(:city) {|n| "City #{n}" }
     sequence(:state) { |n| "State #{n}" }
     sequence(:zip, (11111..99999).cycle) { |n| 1 + n }
+    user
   end
 end
