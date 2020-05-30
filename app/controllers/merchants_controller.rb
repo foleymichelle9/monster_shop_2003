@@ -2,6 +2,8 @@ class MerchantsController <ApplicationController
 
   def index
     @merchants = Merchant.all
+
+    @admin = current_user_is_admin?
   end
 
   def show
@@ -47,4 +49,7 @@ class MerchantsController <ApplicationController
     params.permit(:name,:address,:city,:state,:zip)
   end
 
+  def current_user_is_admin?
+    current_user.role == "admin"
+  end 
 end

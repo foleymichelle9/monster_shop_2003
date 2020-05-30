@@ -12,7 +12,7 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
       
-      visit '/merchant/dashboard'
+      visit merchant_dashboard_path
     end
     it 'I can see the name and full address of the merchant I work for' do
 
@@ -21,15 +21,44 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
       expect(page).to have_content(@merchant1.city)
       expect(page).to have_content(@merchant1.state)
       expect(page).to have_content(@merchant1.zip)
+      expect(page).to_not have_content(@merchant2.name)
     end
     it 'There is a link to my merchants item index page' do
 
       click_link "Items for #{@merchant1.name}"
 
-      expect(current_path).to eq("/merchant/items")
+      expect(current_path).to eq(merchant_items_path)
+    end
+  end
+  describe 'As an admin' do
+    before(:each) do
+      
+      @user2 = create(:user, role: "admin")
+      
+      @merchant1 = create(:merchant)
+      @merchant2 = create(:merchant)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user2)
+      
+      visit merchants_path
+    end
+    it 'I visit the merchants index page, I can click on a merchant name and see everything the merchant would see ' do
+
+      click_link @merchant1.name 
+
+      expect(current_path).to eq(admin_merchant_path(@merchant1))
+
+      expect(page).to have_content(@merchant1.name)
+      expect(page).to have_content(@merchant1.address)
+      expect(page).to have_content(@merchant1.city)
+      expect(page).to have_content(@merchant1.state)
+      expect(page).to have_content(@merchant1.zip)
+      expect(page).to_not have_content(@merchant2.name)
     end
   end
 end
+
+
 
 # User Story 35, Merchant Dashboard displays Orders
 
@@ -43,3 +72,9 @@ end
 # - the date the order was made
 # - the total quantity of my items in the order
 # - the total value of my items for that order
+
+# As an admin user
+# When I visit the merchant index page ("/merchants")
+# And I click on a merchant's name,
+# Then my URI route should be ("/admin/merchants/6")
+# Then I see everything that merchant would see

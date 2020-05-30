@@ -1,0 +1,9 @@
+<h1><%= @merchant.name %></h1>
+
+<center>
+  <p><%= @merchant.address %></p>
+  <p><%= @merchant.city %></p>
+  <p><%= @merchant.state %></p>
+  <p><%= @merchant.zip %></p>
+  <%= link_to "Items for #{@merchant.name}", "/merchant/items" %>
+</center>
