@@ -1,4 +1,5 @@
-class Merchant::ItemsController < ApplicationController
+class Merchant::ItemsController < Merchant::BaseController
+  
   def index
   end 
 end
