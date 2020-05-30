@@ -20,4 +20,3 @@ RSpec.describe 'profile show page', type: :feature do
     expect(page).to have_link("Edit Profile")
   end
 end
-
