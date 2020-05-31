@@ -20,9 +20,6 @@ RSpec.describe 'Site Navigation' do
       
       visit "/cart"
       expect(page).to have_content("The page you were looking for doesn't exist.")
-      
-      # visit merchant_items_path
-      # expect(page).to have_content("The page you were looking for doesn't exist.")
     end
   end 
 end 
