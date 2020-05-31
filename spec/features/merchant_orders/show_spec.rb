@@ -55,38 +55,40 @@ RSpec.describe 'Merchant order show page' do
   it "US31 part I - merchant can fulfil orders" do
     visit "/merchant/orders/#{@order1.id}"
 
-    within("#item-#{item1.id}")do
+    within("#item-#{@item1.id}")do
       expect(page).to have_content(@item1.name)
-      expect(page).to have_content(@item1.status)
+      expect(page).to have_content("Item Order Status: unfulfilled")
       expect(page).to_not have_content(@item2.name)
       expect(page).to have_button("Fulfill Item")
     end
-    within("#item-#{item2.id}")do
+    within("#item-#{@item2.id}")do
       expect(page).to have_content(@item2.name)
-      expect(page).to have_content(@item2.status)
+      expect(page).to have_content("Item Order Status: unfulfilled")
       expect(page).to_not have_content(@item3.name)
       click_button("Fulfill Item")
     end
-    within("#item-#{item1.id}")do
-      expect(page).to have_content("Status: unfulfilled")
+    within("#item-#{@item1.id}")do
+      expect(page).to have_content("Item Order Status: unfulfilled")
     end
-    within("#item-#{item2.id}")do
-      expect(page).to have_content("Status: fulfilled")
+    within("#item-#{@item2.id}")do
+      expect(page).to have_content("Item Order Status: fulfilled")
     end
     
   end
 
-  xit "US31 part II - when all merchants fulfill items, order status is fulfilled" do
+  it "US31 part II - when all merchants fulfill items, order status is fulfilled" do
     visit "/merchant/orders/#{@order1.id}"
-        within("order-#{@order1.id}")do
+
+    within("#order-#{@order1.id}")do
       expect(page).to have_content("Order Status: pending")
     end
-    within("#item-#{item1.id}")do
+    within("#item-#{@item1.id}")do
       click_button("Fulfill Item")
     end
-    within("#item-#{item2.id}")do
+    within("#item-#{@item2.id}")do
       click_button("Fulfill Item")
     end
+    click_link "Logout"
 
     visit '/login'
     within("#login-form")do
@@ -94,20 +96,19 @@ RSpec.describe 'Merchant order show page' do
       fill_in :password, with: @password
       click_button "Login"
     end
+
     visit "/merchant/orders/#{@order1.id}"
-    within("order-#{@order1.id}")do
+
+    within("#order-#{@order1.id}")do
       expect(page).to have_content("Order Status: pending")
     end
-    within("#item-#{item3.id}")do
+    within("#item-#{@item3.id}")do
       click_button("Fulfill Item")
     end
 
-    visit '/merchant/orders'
-    within("order-#{@order1.id}")do
+    within("#order-#{@order1.id}")do
       expect(page).to have_content("Order Status: packaged")
     end
-
-
 
   end
   

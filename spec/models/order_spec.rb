@@ -28,11 +28,13 @@ describe Order, type: :model do
       @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
       @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
     end
-    it 'grandtotal' do
+    it '#grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
     end
-    it 'total items' do
+    it '#total items' do
       expect(@order_1.total_items).to eq(5)
     end
+    
+    
   end
 end

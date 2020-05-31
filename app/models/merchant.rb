@@ -25,5 +25,8 @@ class Merchant <ApplicationRecord
   def distinct_cities
     item_orders.distinct.joins(:order).pluck(:city)
   end
-
+  
+  def this_item_orders(params)
+    item_orders.where(order_id: params[:id])
+  end
 end
