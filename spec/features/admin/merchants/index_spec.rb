@@ -52,6 +52,12 @@ RSpec.describe 'Admin Merchant Index Page' do
   end
 
   it "US39 disabled merchants have their items disabled" do
+    visit admin_merchants_path
+
+    within("#merchant-#{@merchant2.id}")do
+      click_button("enable")
+    end
+
     visit items_path 
 
     expect(page).to have_content(@item1.name)
@@ -69,6 +75,60 @@ RSpec.describe 'Admin Merchant Index Page' do
 
     expect(page).to_not have_content(@item1.name)
     expect(page).to_not have_content(@item2.name)
+    expect(page).to have_content(@item3.name)
+    expect(page).to have_content(@item4.name)
+    
+  end
+
+  it "US40 admin enables a merchant account" do
+    visit admin_merchants_path
+    expect(current_path).to eq('/admin/merchants')
+
+    within("#merchant-#{@merchant1.id}")do
+      expect(page).to have_content(@merchant1.name)
+      expect(page).to have_button("disable")
+    end
+    within("#merchant-#{@merchant3.id}")do
+      expect(page).to have_content(@merchant3.name)
+      expect(page).to have_button("disable")
+    end
+    within("#merchant-#{@merchant2.id}")do
+      expect(page).to have_content(@merchant2.name)
+      click_button("enable")
+    end
+
+    expect(current_path).to eq(admin_merchants_path)
+    expect(page).to have_content("Merchant #{@merchant2.id} has been enabled")
+
+  end
+
+  it "US41 merchants that are enabled have their items activated" do
+    visit admin_merchants_path
+
+    within("#merchant-#{@merchant2.id}")do
+      click_button("enable")
+    end
+    within("#merchant-#{@merchant1.id}")do
+      click_button("disable")
+    end
+
+    visit items_path 
+
+    expect(page).to_not have_content(@item1.name)
+    expect(page).to_not have_content(@item2.name)
+    expect(page).to have_content(@item3.name)
+    expect(page).to have_content(@item4.name)
+
+    visit admin_merchants_path
+    
+     within("#merchant-#{@merchant1.id}")do
+      click_button("enable")
+    end
+
+    visit items_path 
+
+    expect(page).to have_content(@item1.name)
+    expect(page).to have_content(@item2.name)
     expect(page).to have_content(@item3.name)
     expect(page).to have_content(@item4.name)
     

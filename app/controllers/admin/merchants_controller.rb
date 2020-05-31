@@ -16,6 +16,7 @@ class Admin::MerchantsController < Admin::BaseController
       flash[:notice] = "Merchant #{merchant.id} has been disabled"
     elsif params[:active] == "true"
       merchant.update(active?: true)
+      activate_items(merchant)
       flash[:notice] = "Merchant #{merchant.id} has been enabled"
     end
     redirect_to admin_merchants_path
@@ -26,6 +27,11 @@ class Admin::MerchantsController < Admin::BaseController
   def deactivate_items(merchant)
     merchant.items.each do |item|
       item.update(active?: false)
+    end
+  end
+  def activate_items(merchant)
+    merchant.items.each do |item|
+      item.update(active?: true)
     end
   end
 
