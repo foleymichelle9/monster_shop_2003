@@ -57,11 +57,11 @@ Rails.application.routes.draw do
   get '/profile/orders/:id', to: 'user_orders#show'
   patch "/profile/orders/:id", to: "user_orders#update"
 
-#   resources :profile, only: [:show] do
-#     resources :orders, only: [:index]
-#   end
+  # resources :profile, only: [:show] do
+  #   resources :orders, only: [:index]
+  # end
 
-#   get '/profile/orders/:id', to: 'orders#show'
+  # get '/profile/orders/:id', to: 'orders#show'
 
 
   namespace :admin do

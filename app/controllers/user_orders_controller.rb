@@ -1,4 +1,5 @@
-class UserOrdersController < ApplicationController
+class UserOrdersController < BaseController
+  before_action :require_regular, except: [:new, :create]
 
   def index
     @user = current_user
