@@ -1,4 +1,6 @@
-class CartController < ApplicationController
+class CartController < BaseController
+  before_action :require_non_admin
+
   def add_item
     item = Item.find(params[:item_id])
     cart.add_item(item.id.to_s)
