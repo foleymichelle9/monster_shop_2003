@@ -18,7 +18,7 @@ RSpec.describe 'Site Navigation' do
     end
     it 'I cannot access any cart paths' do
       
-      visit "/cart"
+      visit cart_path
       expect(page).to have_content("The page you were looking for doesn't exist.")
     end
   end 
