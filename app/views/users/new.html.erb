@@ -1,33 +1,10 @@
 <h1>New Registration Form</h1>
 
-
-
 <center>
-  <%= form_tag "/register" do %>
-  <%= label_tag :name %><br />
-  <%= text_field_tag :name,(@user.name if @user) %><br />
-
-  <%= label_tag :address %><br />
-  <%= text_field_tag :address, (@user.address if @user) %><br />
-
-  <%= label_tag :city %><br />
-  <%= text_field_tag :city, (@user.city if @user) %><br />
-
-  <%= label_tag :state %><br />
-  <%= text_field_tag :state, (@user.state if @user) %><br />
-
-  <%= label_tag :zip %><br />
-  <%= text_field_tag :zip, (@user.zip if @user) %><br />
-
-  <%= label_tag :email %><br />
-  <%= text_field_tag :email, (@user.email if @user) %><br />
-
-  <%= label_tag :password %><br />
-  <%= password_field_tag :password %><br />
-
-  <%= label_tag :password_confirmation, "Confirm Password" %><br />
-  <%= password_field_tag :password_confirmation %><br />
-
-  <%= submit_tag "Submit Form"%>
-  <%end%>
+<%= render partial: 'form', locals: {
+                                      path: "/register",
+                                      method: :post,
+                                      button_text: 'Submit Form',
+                                      visible: true
+                                    } %>
 </center>

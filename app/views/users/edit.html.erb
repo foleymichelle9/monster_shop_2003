@@ -1,0 +1,10 @@
+<h1>Edit Profile</h1>
+
+<center>
+  <%= render partial: 'form', locals: {
+                                      path: "/users/#{@user.id}",
+                                      method: :patch,
+                                      button_text: 'Submit Form',
+                                      visible: false
+                                    } %>
+</center>

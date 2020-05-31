@@ -1,4 +1,5 @@
-class OrdersController <ApplicationController
+class OrdersController < BaseController
+  before_action :require_regular, except: [:new, :create]
 
   def index
     @orders = Order.all
@@ -14,6 +15,7 @@ class OrdersController <ApplicationController
   end
 
   def create
+
     order = Order.create(order_params)
     if order.save
       cart.items.each do |item,quantity|
@@ -35,6 +37,6 @@ class OrdersController <ApplicationController
   private
 
   def order_params
-    params.permit(:name, :address, :city, :state, :zip)
+    params.permit(:name, :address, :city, :state, :zip, :user_id)
   end
 end

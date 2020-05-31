@@ -62,7 +62,6 @@ RSpec.describe 'Site Navigation' do
         click_button "Login"
 
       end
-      
       within 'nav' do
         expect(page).to_not have_content("Login")
         expect(page).to have_content("Profile")
@@ -72,5 +71,35 @@ RSpec.describe 'Site Navigation' do
 
       expect(current_path).to eq('/')
     end
+    it "I cannot visit merchant pages" do
+
+      visit merchant_dashboard_path
+
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+    end 
+    it "I cannot visit admin pages" do
+
+      visit admin_dashboard_path
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+
+      @merchant = create(:merchant)
+
+      visit admin_merchant_path(@merchant)
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+    end 
+    it "I cannot visit profile pages" do
+
+      @user = create(:user)
+      @order = create(:order, user_id: @user.id)
+
+      visit profile_path(@user)
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+      
+      visit profile_orders_path(@order)
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+
+      visit profile_orders_path
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+    end 
   end
 end

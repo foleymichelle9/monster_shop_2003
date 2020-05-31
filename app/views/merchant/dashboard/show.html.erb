@@ -1,0 +1,12 @@
+<% if @user.merchant %>
+  <h1><%= @user.merchant.name %></h1>
+
+  <center>
+  <p><%= @user.merchant.address %></p>
+  <p><%= @user.merchant.city %></p>
+  <p><%= @user.merchant.state %></p>
+  <p><%= @user.merchant.zip %></p>
+  <%= link_to "Items for #{@user.merchant.name}", "/merchant/items" %>
+</center>
+<% else %>
+<% end %>

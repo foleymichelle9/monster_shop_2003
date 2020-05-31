@@ -36,4 +36,34 @@ RSpec.describe 'Cart show' do
       expect(page).to_not have_link("Checkout")
     end
   end
+  describe 'When Visitor tries to checkout'do
+    it "US25 there is no checkout button, instead a link to login or register" do
+      visit '/orders/new'
+
+      within("#checkout-field")do 
+        expect(page).to_not have_button('Create Order')
+        expect(page).to have_link('Login')
+        click_link('Register')
+      end
+      expect(current_path).to eq('/register')
+
+      @regular = create(:user, name:"BOB")
+      @password = 'p123'
+      visit '/login'
+      within("#login-form")do
+        fill_in :email, with: @regular.email
+        fill_in :password, with: @password
+        click_button "Login"
+      end
+
+      visit '/orders/new'
+      within("#checkout-field")do 
+        expect(page).to have_button('Create Order')
+        expect(page).to_not have_link('Login')
+        expect(page).to_not have_link('Register')
+        click_button "Create Order"
+      end
+    end
+    
+  end
 end

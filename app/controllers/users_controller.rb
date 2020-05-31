@@ -4,6 +4,30 @@ class UsersController < ApplicationController
 
   end
 
+  def edit
+    @user = User.find(params[:user_id])
+  end
+
+  def edit_password
+    @user = User.find(params[:user_id])
+  end
+
+  def update
+    @user = User.find(params[:user_id])
+    @user.update(user_params)
+
+    if @user.save && params[:password_confirmation]
+      flash[:success] = "Your password has been updated"
+      redirect_to "/profile"
+    elsif @user.save
+      flash[:success] = "Your profile has been updated"
+      redirect_to "/profile"
+    else
+      flash[:error] = "Email has already been taken"
+      redirect_to "/users/#{@user.id}/edit"
+    end
+  end
+  
   def create
     @user = User.new(user_params)
     if @user.save
@@ -20,13 +44,6 @@ class UsersController < ApplicationController
       flash[:notice] = "#{missing_params(user_params).join(", ")} can't be blank, please try again."
       render :new
     end
-
-    # def show
-    #   if current_user
-    #     user = User.find(current_user.id)
-    #     flash[:success] = "Logged in as #{user.name}"
-    #   end
-    # end
   end
 
   private
