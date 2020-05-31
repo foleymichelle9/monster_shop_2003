@@ -6,6 +6,11 @@ RSpec.describe 'User Login-Logout' do
     @merchant1 = create(:user, email: 'merchant@eamil.com',role: 1)
     @admin1 = create(:user, email: 'admin@eamil.com',role: 2)
     @password = 'p123'
+
+    @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
+    @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 25)
+    @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
+ 
     
   end
 
@@ -142,7 +147,7 @@ RSpec.describe 'User Login-Logout' do
   end
 
   describe "US16" do
-    it "users can logout" do
+    it "users can logout, cart is returned to zero" do
       visit '/login'
 
       within("#login-form")do
@@ -150,14 +155,32 @@ RSpec.describe 'User Login-Logout' do
         fill_in :password, with: @password
         click_button "Login"
       end
+
+      visit "/items/#{@paper.id}"
+      click_on "Add To Cart"
+
+      expect(page).to have_content("#{@paper.name} was successfully added to your cart")
+      expect(current_path).to eq("/items")
+
+      within 'nav' do
+        expect(page).to have_content("Cart: 1")
+      end
+
+      visit "/items/#{@pencil.id}"
+      click_on "Add To Cart"
+
+      within 'nav' do
+        expect(page).to have_content("Cart: 2")
+      end
       
       
 
       visit '/logout'
       expect(current_path).to eq('/')
       expect(page).to have_content("You have logged out")
-      # expect(page).to have_css(".cart_indicator", text:0)
+      expect(page).to have_content("Cart: 0")
     end
   end
 
 end
+     

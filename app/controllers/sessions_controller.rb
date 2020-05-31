@@ -10,6 +10,7 @@
 
     def destroy
       session.delete(:user_id)
+      session[:cart] = {} # should the session remember the cart when user logs back in?
       flash[:notice] = "You have logged out"
       redirect_to '/'
     end
