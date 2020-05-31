@@ -30,7 +30,7 @@ RSpec.describe 'User Login-Logout' do
       expect(page).to have_content("#{@regular1.email}")
 
     end
-    xit "can login merchants" do
+    it "can login merchants" do
       visit '/login'
 
       within("#login-form")do
@@ -40,8 +40,7 @@ RSpec.describe 'User Login-Logout' do
       end
 
       expect(page).to have_content("Welcome #{@merchant1.name}")
-      expect(current_path).to eq("/merchant")
-      expect(page).to have_content(@merchant1.email)
+      expect(current_path).to eq("/merchant/dashboard")
 
     end
     it "can login admins" do
@@ -118,7 +117,7 @@ RSpec.describe 'User Login-Logout' do
 
       expect(current_path).to eq('/profile')
     end
-    xit "if merchant it redirects to merchant dashboard" do
+    it "if merchant it redirects to merchant dashboard" do
 
       visit '/login'
 
@@ -129,7 +128,7 @@ RSpec.describe 'User Login-Logout' do
       end
 
       visit '/login'
-      expect(current_path).to eq('/merchant')
+      expect(current_path).to eq('/merchant/dashboard')
     end
     it "if admin it redirects to admin dashboard" do
 

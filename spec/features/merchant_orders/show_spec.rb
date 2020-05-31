@@ -8,8 +8,8 @@ RSpec.describe 'Merchant order show page' do
     @password = 'p123'
     @merchant1 = create(:merchant)
     @merchant2 = create(:merchant)
-    @merchant1_user = create(:user, merchant_id: @merchant1.id )
-    @merchant2_user = create(:user, merchant_id: @merchant2.id )
+    @merchant1_user = create(:user, merchant_id: @merchant1.id, role: 1 )
+    @merchant2_user = create(:user, merchant_id: @merchant2.id, role: 1 )
     @item1 = create(:item, merchant: @merchant1)
     @item2 = create(:item, merchant: @merchant1)
     @item3 = create(:item, merchant: @merchant2)
@@ -23,6 +23,7 @@ RSpec.describe 'Merchant order show page' do
 
     visit "/items/#{@item1.id}"
     click_on "Add To Cart"
+    visit "/items/#{@item1.id}"
     click_on "Add To Cart"
     visit "/items/#{@item2.id}"
     click_on "Add To Cart"
@@ -30,7 +31,7 @@ RSpec.describe 'Merchant order show page' do
     click_on "Add To Cart"
 
     visit "/cart"
-    click_button "Checkout"
+    click_link "Checkout"
     fill_in "name",	with: @regular1.name 
     fill_in "address",	with: @regular1.address 
     fill_in "city",	with: @regular1.city 
@@ -39,6 +40,7 @@ RSpec.describe 'Merchant order show page' do
     click_button "Create Order"
 
     @order1 = Order.last
+    click_on "Logout"
 
     visit '/login'
     within("#login-form")do
@@ -48,10 +50,9 @@ RSpec.describe 'Merchant order show page' do
     end
 
     expect(current_path).to eq('/merchant/dashboard')
-    binding.pry
   end
   
-  xit "US31 part I - merchant can fulfil orders" do
+  it "US31 part I - merchant can fulfil orders" do
     visit "/merchant/orders/#{@order1.id}"
 
     within("#item-#{item1.id}")do
