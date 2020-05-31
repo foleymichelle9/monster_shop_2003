@@ -12,6 +12,7 @@ class Admin::MerchantsController < Admin::BaseController
     merchant = Merchant.find(params[:id])
     if params[:active] == "false"
       merchant.update(active?: false)
+      deactivate_items(merchant)
       flash[:notice] = "Merchant #{merchant.id} has been disabled"
     elsif params[:active] == "true"
       merchant.update(active?: true)
@@ -19,6 +20,17 @@ class Admin::MerchantsController < Admin::BaseController
     end
     redirect_to admin_merchants_path
   end
+
+  private 
+
+  def deactivate_items(merchant)
+    merchant.items.each do |item|
+      item.update(active?: false)
+    end
+  end
+
+  
+  
   
   
 end

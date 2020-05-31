@@ -12,6 +12,11 @@ RSpec.describe 'Admin Merchant Index Page' do
     @merchant2_user = create(:user, role: 1, merchant_id: @merchant2.id)
     @merchant3_user = create(:user, role: 1, merchant_id: @merchant3.id)
 
+    @item1 = create(:item, merchant: @merchant1)
+    @item2 = create(:item, merchant: @merchant1)
+    @item3 = create(:item, merchant: @merchant2)
+    @item4 = create(:item, merchant: @merchant3)
+
 
     visit '/login'
     within("#login-form")do
@@ -45,6 +50,32 @@ RSpec.describe 'Admin Merchant Index Page' do
     expect(page).to have_content("Merchant #{@merchant3.id} has been disabled")
 
   end
+
+  it "US39 disabled merchants have their items disabled" do
+    visit items_path 
+
+    expect(page).to have_content(@item1.name)
+    expect(page).to have_content(@item2.name)
+    expect(page).to have_content(@item3.name)
+    expect(page).to have_content(@item4.name)
+
+    visit admin_merchants_path
+    
+     within("#merchant-#{@merchant1.id}")do
+      click_button("disable")
+    end
+
+    visit items_path 
+
+    expect(page).to_not have_content(@item1.name)
+    expect(page).to_not have_content(@item2.name)
+    expect(page).to have_content(@item3.name)
+    expect(page).to have_content(@item4.name)
+    
+  end
+  
+
+
   
 
 end
