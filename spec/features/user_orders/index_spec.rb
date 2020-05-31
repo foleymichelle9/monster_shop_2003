@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'User Login-Logout' do
   before :each do
-    @regular2 = create(:user, email: 'regular2@email.com')
+    @regular1 = create(:user, email: 'regular2@email.com')
     @password = 'p123'
     visit '/login'
     within("#login-form")do
-      fill_in :email, with: @regular2.email
+      fill_in :email, with: @regular1.email
       fill_in :password, with: @password
       click_button "Login"
     end
@@ -20,8 +20,8 @@ RSpec.describe 'User Login-Logout' do
     @item220 = create(:item, merchant: @merchant2)
     @item222 = create(:item, merchant: @merchant2)
 
-    @order1 = create(:order, name: "BOB")      
-    @order2 = create(:order, name: "ANN") 
+    @order1 = create(:order, name: "BOB", user: @regular1)      
+    @order2 = create(:order, name: "ANN", user: @regular1) 
 
     ItemOrder.create(order: @order1, item: @item100, price: 1, quantity: 100)
     ItemOrder.create(order: @order1, item: @item110, price: 11, quantity: 110)
@@ -36,7 +36,6 @@ RSpec.describe 'User Login-Logout' do
     it "user profile dispalys orders and their detials" do
       visit profile_orders_path
       expect(current_path).to eq('/profile/orders') 
-
 
       within("#order-#{@order1.id}")do
         expect(page).to have_link(@order1.id)

@@ -93,12 +93,14 @@ RSpec.describe 'Site Navigation' do
       @order = create(:order, user_id: @user.id)
 
       visit profile_path(@user)
+      expect(current_path).to eq("/profile.#{@user.id}")
       expect(page).to have_content("The page you were looking for doesn't exist.")
       
       visit profile_orders_path(@order)
       expect(page).to have_content("The page you were looking for doesn't exist.")
-
+      
       visit profile_orders_path
+      expect(current_path).to eq("/profile/orders")
       expect(page).to have_content("The page you were looking for doesn't exist.")
     end 
   end

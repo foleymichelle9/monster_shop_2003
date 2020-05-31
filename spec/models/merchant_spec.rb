@@ -54,5 +54,33 @@ describe Merchant, type: :model do
       expect(@meg.distinct_cities).to include("Hershey")
     end
 
+    it "#this_order_items" do
+      @regular1 = create(:user)
+      @regular2 = create(:user)
+      @regular3 = create(:user)
+      @merchant1 = create(:merchant)
+      @merchant2 = create(:merchant)
+      @merchant1_user = create(:user, merchant_id: @merchant1.id )
+      @merchant2_user = create(:user, merchant_id: @merchant2.id )
+
+      @item1 = create(:item, merchant: @merchant1)
+      @item2 = create(:item, merchant: @merchant1)
+      @item3 = create(:item, merchant: @merchant2)
+
+      @order10 = create(:order, user: @regular1, status: 3) #cancelled
+      @order11 = create(:order, user: @regular1, status: 1) #packaged
+      @order2 = create(:order, user: @regular2, status: 2) #shipped
+      @order3 = create(:order, user: @regular3, status: 0) #pending
+
+      @item_order101 = ItemOrder.create(order_id: @order10.id, item_id: @item1.id, status: 0, price: @item1.price, quantity: 1)
+      @item_order102 = ItemOrder.create(order_id: @order10.id, item_id: @item2.id, status: 0, price: @item2.price, quantity: 1)
+      ItemOrder.create(order_id: @order11.id, item_id: @item2.id, status: 1, price: @item2.price, quantity: 1)
+      ItemOrder.create(order_id: @order2.id, item_id: @item2.id, status: 1, price: @item2.price, quantity: 2)
+      ItemOrder.create(order_id: @order3.id, item_id: @item3.id, status: 1, price: @item3.price, quantity: 3)
+
+      params = {:id => @order10.id}
+      expect(@merchant1.this_item_orders(params)).to eq([@item_order101, @item_order102])
+    end
+
   end
 end
