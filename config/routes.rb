@@ -2,13 +2,15 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root "welcome#index"
 
-  get "/merchants", to: "merchants#index"
-  get "/merchants/new", to: "merchants#new"
-  get "/merchants/:id", to: "merchants#show"
-  post "/merchants", to: "merchants#create"
-  get "/merchants/:id/edit", to: "merchants#edit"
-  patch "/merchants/:id", to: "merchants#update"
-  delete "/merchants/:id", to: "merchants#destroy"
+  # get "/merchants", to: "merchants#index"
+  # get "/merchants/new", to: "merchants#new"
+  # get "/merchants/:id", to: "merchants#show"
+  # post "/merchants", to: "merchants#create"
+  # get "/merchants/:id/edit", to: "merchants#edit"
+  # patch "/merchants/:id", to: "merchants#update"
+  # delete "/merchants/:id", to: "merchants#destroy"
+
+  resources :merchants
 
   get "/items", to: "items#index"
   get "/items/:id", to: "items#show"
@@ -50,11 +52,25 @@ Rails.application.routes.draw do
   get '/logout', to: 'sessions#destroy'
 
 
+
   get '/profile/orders', to: 'user_orders#index'
   get '/profile/orders/:id', to: 'user_orders#show'
   patch "/profile/orders/:id", to: "user_orders#update"
 
+#   resources :profile, only: [:show] do
+#     resources :orders, only: [:index]
+#   end
+
+#   get '/profile/orders/:id', to: 'orders#show'
+
+
   namespace :admin do
     get '/dashboard', to: "dashboard#index"
+    get resources :merchants, only: [:show]
+  end
+
+  namespace :merchant do
+    get '/dashboard', to: "dashboard#show"
+    get '/items', to: 'items#index'
   end
 end
