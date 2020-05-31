@@ -60,5 +60,29 @@ RSpec.describe "Admin Order Index page"do
     expect("#order-#{@order2.id}").to appear_before("#order-#{@order10.id}")
     
   end
+
+  it "US32 admin can see all orders" do
+    visit '/admin/dashboard'
+
+    within("#order-#{@order10.id}")do
+      expect(page).to_not have_button("Ship Order")
+    end
+    within("#order-#{@order11.id}")do
+      expect(page).to have_content("Order Status: packaged")
+      click_button("Ship Order")
+    end
+    within("#order-#{@order11.id}")do
+      expect(page).to have_content("Order Status: shipped")
+      expect(page).to_not have_button("Ship Order")
+    end
+    within("#order-#{@order2.id}")do
+      expect(page).to_not have_button("Ship Order")
+    end
+    within("#order-#{@order3.id}")do
+      expect(page).to_not have_button("Ship Order")
+    end
+
+  
+  end
   
 end
