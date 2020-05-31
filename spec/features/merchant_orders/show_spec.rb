@@ -85,6 +85,7 @@ RSpec.describe 'Merchant order show page' do
     within("#item-#{@item1.id}")do
       click_button("Fulfill Item")
     end
+    expect(page).to have_content("has been fulfilled")
     within("#item-#{@item2.id}")do
       click_button("Fulfill Item")
     end

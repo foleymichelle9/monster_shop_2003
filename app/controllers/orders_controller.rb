@@ -1,5 +1,6 @@
 class OrdersController < BaseController
-  before_action :require_regular, except: [:new, :create]
+  before_action :require_regular, except: [:new, :create, :update]
+  before_action :require_admin, only: [:update]
 
   def index
     @orders = Order.all
@@ -32,6 +33,15 @@ class OrdersController < BaseController
       render :new
     end
   end
+
+  def update 
+    if params[:admin] == "true"
+      order = Order.find(params[:id])
+      order.update(status: 2)
+      redirect_to '/admin/dashboard'
+    end
+  end
+  
 
 
   private
