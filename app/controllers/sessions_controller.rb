@@ -33,7 +33,7 @@
       user = User.find(session[:user_id])
 
       redirect_to ("/profile") if user.role == "regular"
-      redirect_to ("/merchant") if user.role == "merchant"
+      redirect_to ("/merchant/dashboard") if user.role == "merchant"
       redirect_to ("/admin/dashboard") if user.role == "admin"
     end
 
