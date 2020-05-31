@@ -19,5 +19,9 @@ class ApplicationController < ActionController::Base
   def current_merchant?
     current_user && current_user.merchant?
   end
+
+  def current_regular?
+    current_user && current_user.regular?
+  end
 end
 
