@@ -1,4 +1,5 @@
-class OrdersController <ApplicationController
+class OrdersController < BaseController
+  before_action :require_regular, except: [:new, :create]
 
   def index
     @orders = Order.all
