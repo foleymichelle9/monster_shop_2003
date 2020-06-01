@@ -10,7 +10,7 @@
 
   <body>
     <nav class = "topnav">
-       <p> <%= "Logged in as #{current_user.name}" if current_user %></p>
+       <p class="white"> <%= "Logged in as #{current_user.name}" if current_user %></p>
       <%= link_to "Home", "/"%>
       <%= link_to "All Merchants", "/merchants"%>
       <%= link_to "All Items", "/items"%>

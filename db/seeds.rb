@@ -8,9 +8,9 @@
 
 Review.destroy_all
 Merchant.destroy_all
+Item.destroy_all
 Order.destroy_all
 ItemOrder.destroy_all
-Item.destroy_all
 User.destroy_all
 
 #merchants
@@ -25,8 +25,8 @@ bicycle = bike_shop.items.create(name: "Bicycle", description: "Mountain bike", 
 tire_iron = bike_shop.items.create(name: "Tire Iron", description: "Does the job", price: 10, image: "https://www.somafab.com/wp-content/uploads/2011/06/tirelever_core_full_lever4c1.jpg", inventory: 0, active?: false)
 
 #bike_shop item reviews
-review1 = tire.reviews.create(title: "Great tire", content: "Will buy this tire again", rating: 8)
-review2 = helmet.reviews.create(title: "Cool helmet", content: "Very safe", rating: 7)
+review1 = tire.reviews.create(title: "Great tire", content: "Will buy this tire again", rating: 4)
+review2 = helmet.reviews.create(title: "Cool helmet", content: "Very safe", rating: 3)
 
 #dog_shop items
 pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
@@ -35,9 +35,9 @@ dog_food = dog_shop.items.create(name: "Dog Food", description: "Super tasty", p
 dog_pram = dog_shop.items.create(name: "Dog pram", description: "Carry your dog in style", price: 200, image: "https://assets.petco.com/petco/image/upload/f_auto,q_auto,t_ProductDetail-large/2327664-center-2", inventory: 0, active?: false)
 
 #dog_shop item reviews
-review3 = pull_toy.reviews.create(title: "Crappy pull toy", content: "Dog hates this", rating: 2)
-review4 = dog_food.reviews.create(title: "Mediocore dog food", content: "Dog doesn't love it or hate it", rating: 5)
-review5 = dog_food.reviews.create(title: "Good, not great dog food", content: "Acceptable for my dog", rating: 7)
+review3 = pull_toy.reviews.create(title: "Crappy pull toy", content: "Dog hates this", rating: 1)
+review4 = dog_food.reviews.create(title: "Mediocore dog food", content: "Dog doesn't love it or hate it", rating: 2)
+review5 = dog_food.reviews.create(title: "Good, not great dog food", content: "Acceptable for my dog", rating: 4)
 
 #computer_shop items
 laptop = computer_shop.items.create(name: "Laptop", description: "Fastest computer around!", price: 1000, image: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6356/6356671_sd.jpg", inventory: 20)
@@ -46,20 +46,20 @@ mouse = computer_shop.items.create(name: "Mouse", description: "Bluetooth mouse"
 carrying_case = computer_shop.items.create(name: "Laptop carrying case", description: "Keep your laptop safe", price: 75, image: "https://static.bhphoto.com/images/images2500x2500/1422621364_1116114.jpg", inventory: 13, active?: false)
 
 #computer_shop reviews
-review6 = laptop.reviews.create(title: "Great laptop", content: "Love it", rating: 9)
-review7 = laptop.reviews.create(title: "Decent laptop", content: "Love it", rating: 7)
-review8 = keyboard.reviews.create(title: "Decent keyboard", content: "Does the job", rating: 7)
-review9 = mouse.reviews.create(title: "Decent mouse", content: "Does the job", rating: 6)
+review6 = laptop.reviews.create(title: "Great laptop", content: "Love it", rating: 4)
+review7 = laptop.reviews.create(title: "Decent laptop", content: "Love it", rating: 3)
+review8 = keyboard.reviews.create(title: "Decent keyboard", content: "Does the job", rating: 3)
+review9 = mouse.reviews.create(title: "Decent mouse", content: "Does the job", rating: 3)
 
 #Users
-regular1 = User.create!(name: "User Name1", address: "user address1", city: "user city", state: "state", zip: "user zip", email: "user1", password: "user1", role: 0)
-regular2 = User.create!(name: "User Name2", address: "user address2", city: "user city", state: "state", zip: "user zip", email: "user2", password: "user2", role: 0)
-regular3 = User.create!(name: "User Name3", address: "user address3", city: "user city", state: "state", zip: "user zip", email: "user3", password: "user3", role: 0)
-merchant1 = User.create!(name: "Merchant Name1", address: "merchant address", city: "merchant city", state: "state", zip: "merchant zip", email: "merchant1", password: "merchant", role: 1, merchant_id: bike_shop.id)
-merchant2 = User.create!(name: "Merchant Name2", address: "merchant address", city: "merchant city", state: "state", zip: "merchant zip", email: "merchant2", password: "merchant", role: 1, merchant_id: dog_shop.id)
-merchant3 = User.create!(name: "Merchant Name3", address: "merchant address", city: "merchant city", state: "state", zip: "merchant zip", email: "merchant3", password: "merchant", role: 1, merchant_id: computer_shop.id)
-admin1 = User.create!(name: "Admin Name1", address: "admin address", city: "admin city", state: "state", zip: "admin zip", email: "admin1", password: "admin1", role: 2)
-admin2 = User.create!(name: "Admin Name1", address: "admin address", city: "admin city", state: "state", zip: "admin zip", email: "admin2", password: "admin1", role: 2)
+regular1 = User.create!(name: "User Name1", address: "user address1", city: "user city", state: "state", zip: "user zip", email: "user1", password: "user", role: 0)
+regular2 = User.create!(name: "User Name2", address: "user address2", city: "user city", state: "state", zip: "user zip", email: "user2", password: "user", role: 0)
+regular3 = User.create!(name: "User Name3", address: "user address3", city: "user city", state: "state", zip: "user zip", email: "user3", password: "user", role: 0)
+merchant1 = User.create!(name: "Merchant Name1", address: "merchant address", city: "merchant city", state: "state", zip: "merchant zip", email: "merchant_bike", password: "merchant", role: 1, merchant_id: bike_shop.id)
+merchant2 = User.create!(name: "Merchant Name2", address: "merchant address", city: "merchant city", state: "state", zip: "merchant zip", email: "merchant_dog", password: "merchant", role: 1, merchant_id: dog_shop.id)
+merchant3 = User.create!(name: "Merchant Name3", address: "merchant address", city: "merchant city", state: "state", zip: "merchant zip", email: "merchant_computer", password: "merchant", role: 1, merchant_id: computer_shop.id)
+admin1 = User.create!(name: "Admin Name1", address: "admin address", city: "admin city", state: "state", zip: "admin zip", email: "admin1", password: "admin", role: 2)
+admin2 = User.create!(name: "Admin Name1", address: "admin address", city: "admin city", state: "state", zip: "admin zip", email: "admin2", password: "admin", role: 2)
 
 #Orders
 order1 = Order.create(name: "User Name1", address: "Address 1", city: "City 1", state: "State 1", zip: 11111, user_id: regular1.id)      
