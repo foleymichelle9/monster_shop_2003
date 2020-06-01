@@ -10,9 +10,6 @@ RSpec.describe "Merchant items index page" do
     @item200 = create(:item, merchant: @merchant2, price: 200)
     @merchant_user = create(:user, name: "merchant user", role: 1, merchant_id: @merchant1.id)
 
-
-
-
     visit '/login'
     within("#login-form")do
       fill_in :email, with: @merchant_user.email
@@ -22,8 +19,6 @@ RSpec.describe "Merchant items index page" do
     
   end
   
-
-
   it "US42 Merchant sees their items and can deactivate them " do
     visit merchant_items_path 
 
@@ -79,8 +74,50 @@ RSpec.describe "Merchant items index page" do
       expect(page).to have_button("Enable")      
       expect(page).to have_content("Active? false")
     end
-    
+
+    visit items_path 
+    expect(page).to have_content(@item100.name)
+    expect(page).to have_content(@item101.name)
+    expect(page).to_not have_content(@item102.name)
+    expect(page).to have_content(@item200.name)
+    end
+
+  it "US43 Merchant activates an item and it becomes visable" do
+    visit items_path 
+    expect(page).to have_content(@item100.name)
+    expect(page).to have_content(@item101.name)
+    expect(page).to have_content(@item102.name)
+    expect(page).to have_content(@item200.name)
+
+    visit merchant_items_path 
+    within("#item-#{@item100.id}")do
+      expect(page).to_not have_button("Enable")
+      click_button("Disable")
+    end
+    within("#item-#{@item101.id}")do
+      expect(page).to_not have_button("Enable")
+      click_button("Disable")
+    end
+    visit items_path 
+    expect(page).to_not have_content(@item100.name)
+    expect(page).to_not have_content(@item101.name)
+    expect(page).to have_content(@item102.name)
+    expect(page).to have_content(@item200.name)
+  
+
+    visit merchant_items_path 
+    within("#item-#{@item100.id}")do
+      expect(page).to_not have_button("Disable")
+      click_button("Enable")
+    end
+    expect(page).to have_content("You have enabled item #{@item100.id}")
+    within("#item-#{@item101.id}")do
+      expect(page).to_not have_button("Disable")
+      click_button("Enable")
+    end
+
   end
   
   
-end
+  
+end #final
