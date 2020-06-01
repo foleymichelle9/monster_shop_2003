@@ -54,7 +54,7 @@ RSpec.describe 'Merchant order show page' do
   
   it "US31 part I - merchant can fulfil orders" do
     visit "/merchant/orders/#{@order1.id}"
-
+    
     within("#item-#{@item1.id}")do
       expect(page).to have_content(@item1.name)
       expect(page).to have_content("Item Order Status: unfulfilled")

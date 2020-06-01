@@ -81,6 +81,7 @@ RSpec.describe "Admin Order Index page"do
       click_button("Ship Order")
     end
     expect(current_path).to eq('/admin/dashboard')
+    expect(page).to have_content("Order #{@order11.id} has been shipped")
     within("#order-#{@order11.id}")do
       expect(page).to have_content("Order Status: shipped")
       expect(page).to_not have_button("Ship Order")
