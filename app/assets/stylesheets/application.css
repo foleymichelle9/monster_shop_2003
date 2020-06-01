@@ -156,3 +156,7 @@ td, th {
 tr:nth-child(even) {
   background-color: #F0F8FF;
 }
+
+ .white {
+ color: white;
+ }
