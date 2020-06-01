@@ -1,18 +1,8 @@
 class OrdersController < BaseController
   before_action :require_regular, except: [:new, :create, :update]
   before_action :require_admin, only: [:update]
-
-  def index
-    @orders = Order.all
-  end
-  
-
   def new
 
-  end
-
-  def show
-    @order = Order.find(params[:id])
   end
 
   def create
@@ -27,7 +17,8 @@ class OrdersController < BaseController
       end
       reduce_merchant_inventory(order)
       session.delete(:cart)
-      redirect_to "/orders/#{order.id}"
+      flash[:success] = "Your order has been made!"
+      redirect_to "/profile/orders"
     else
       flash[:notice] = "Please complete address form to create an order."
       render :new
