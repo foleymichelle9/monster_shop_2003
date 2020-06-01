@@ -1,18 +1,8 @@
 class OrdersController < BaseController
   before_action :require_regular, except: [:new, :create, :update]
   before_action :require_admin, only: [:update]
-
-  def index
-    @orders = Order.all
-  end
-  
-
   def new
 
-  end
-
-  def show
-    @order = Order.find(params[:id])
   end
 
   def create

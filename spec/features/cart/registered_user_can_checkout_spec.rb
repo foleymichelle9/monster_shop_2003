@@ -43,7 +43,7 @@ describe 'As a registered user' do
       
       expect(current_path).to  eq("/profile/orders")
       expect(page).to have_content("Your order has been made!") 
-      expect(page).to have_link("Order ##{Order.last.id}") 
+      expect(page).to have_link("Order ID: #{Order.last.id}") 
       visit "/cart"
       expect(page).to have_content("Cart is currently empty")
     end
