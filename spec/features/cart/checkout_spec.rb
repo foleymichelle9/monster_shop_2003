@@ -27,7 +27,7 @@ RSpec.describe 'Cart show' do
       click_on "Checkout"
 
       expect(current_path).to eq("/orders/new")
-    end
+    end 
   end
 
   describe 'When I havent added items to my cart' do
