@@ -1,0 +1,13 @@
+<section id="order-<%=@order.id%>">
+  <h1>Merchant Order <%= @order.id%></h1>
+  <p>Order Status: <%=@order.status %></p>
+</section>
+
+<% @merchant_item_orders.each do |item_order| %>
+  <section id="item-<%=item_order.item. id%>">
+    <p><%=item_order.item.name %></p>
+    <p>Item Order Status: <%=item_order.status %></p>
+    <%= button_to 'Fulfill Item', "/item_orders/#{item_order.id}", method: :patch %>
+  </section>
+
+<% end %>

@@ -12,7 +12,6 @@ class Order <ApplicationRecord
   def total_items
     items.sum(:quantity)
   end
-  
 
   enum status: {pending: 0, packaged: 1, shipped: 2, cancelled: 3}
 end

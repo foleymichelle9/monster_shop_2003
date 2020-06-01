@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'User Login-Logout' do
+RSpec.describe 'User order show page' do
   before :each do
     @regular2 = create(:user, email: 'regular2@email.com')
     @password = 'p123'
