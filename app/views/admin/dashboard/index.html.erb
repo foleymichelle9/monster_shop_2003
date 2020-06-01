@@ -1,51 +1,52 @@
 <h1>Admin Dashboard</h1>
-
-<section id="packaged">
-  <% @orders.each do |order| %>
-    <% if order.packaged? %>
-      <section id="order-<%=order.id%>">
-        <p>Ordered by: <%=order.user.name %></p>
-        <p>Order id: <%=order.id %></p>
-        <p>Created at: <%=order.created_at %></p>
-        <p>Order Status: <%=order.status %></p>
-        <%= button_to 'Ship Order', "/orders/#{order.id}?admin=true", method: :patch %>
-      </section>
+<% if !@orders.empty? %>
+  <section id="packaged">
+    <% @orders.each do |order| %>
+      <% if order.packaged? %>
+        <section id="order-<%=order.id%>">
+          <p>Ordered by: <%=order.user.name %></p>
+          <p>Order id: <%=order.id %></p>
+          <p>Created at: <%=order.created_at %></p>
+          <p>Order Status: <%=order.status %></p>
+          <%= button_to 'Ship Order', "/orders/#{order.id}?admin=true", method: :patch %>
+        </section>
+        <%end %>
+    <%end %>
+  </section>
+  <section id="pending">
+    <% @orders.each do |order| %>
+      <% if order.pending? %>
+        <section id="order-<%=order.id%>">
+          <p>Ordered by: <%=order.user.name %></p>
+          <p>Order id: <%=order.id %></p>
+          <p>Created at: <%=order.created_at %></p>
+          <p>Order Status: <%=order.status %></p>
+        </section>
       <%end %>
-  <%end %>
-</section>
-<section id="pending">
-  <% @orders.each do |order| %>
-    <% if order.pending? %>
-      <section id="order-<%=order.id%>">
-        <p>Ordered by: <%=order.user.name %></p>
-        <p>Order id: <%=order.id %></p>
-        <p>Created at: <%=order.created_at %></p>
-        <p>Order Status: <%=order.status %></p>
-      </section>
     <%end %>
-  <%end %>
-</section>
-<section id="shipped">
-  <% @orders.each do |order| %>
-    <% if order.shipped? %>
-      <section id="order-<%=order.id%>">
-        <p>Ordered by: <%=order.user.name %></p>
-        <p>Order id: <%=order.id %></p>
-        <p>Created at: <%=order.created_at %></p>
-        <p>Order Status: <%=order.status %></p>
-      </section>
+  </section>
+  <section id="shipped">
+    <% @orders.each do |order| %>
+      <% if order.shipped? %>
+        <section id="order-<%=order.id%>">
+          <p>Ordered by: <%=order.user.name %></p>
+          <p>Order id: <%=order.id %></p>
+          <p>Created at: <%=order.created_at %></p>
+          <p>Order Status: <%=order.status %></p>
+        </section>
+      <%end %>
     <%end %>
-  <%end %>
-</section>
-<section id="cancelled">
-  <% @orders.each do |order| %>
-    <% if order.cancelled? %>
-      <section id="order-<%=order.id%>">
-        <p>Ordered by: <%=order.user.name %></p>
-        <p>Order id: <%=order.id %></p>
-        <p>Created at: <%=order.created_at %></p>
-        <p>Order Status: <%=order.status %></p>
-      </section>
+  </section>
+  <section id="cancelled">
+    <% @orders.each do |order| %>
+      <% if order.cancelled? %>
+        <section id="order-<%=order.id%>">
+          <p>Ordered by: <%=order.user.name %></p>
+          <p>Order id: <%=order.id %></p>
+          <p>Created at: <%=order.created_at %></p>
+          <p>Order Status: <%=order.status %></p>
+        </section>
+      <%end %>
     <%end %>
-  <%end %>
-</section>
+  </section>
+<%end %>

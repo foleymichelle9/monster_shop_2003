@@ -1,0 +1,13 @@
+<h1>Admin: Merchant Index</h1>
+
+<%@merchants.each do |merchant| %>
+  <section id="merchant-<%=merchant.id%>">
+    <p>Merchant: <%=merchant.name %></p>
+    <% if merchant.active? %>
+      <%= button_to "disable", "merchants/#{merchant.id}?active=false", method: :patch %>
+    <% else %>
+      <%= button_to "enable", "merchants/#{merchant.id}?active=true", method: :patch %>
+    <% end %>
+  </section>
+
+<% end %>
