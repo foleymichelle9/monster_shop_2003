@@ -55,21 +55,68 @@ RSpec.describe 'Cart show' do
 
         expect(page).to have_content("Total: $124")
       end
-    end
-  end
-  describe "When I haven't added anything to my cart" do
-    describe "and visit my cart show page" do
-      it "I see a message saying my cart is empty" do
-        visit '/cart'
-        expect(page).to_not have_css(".cart-items")
-        expect(page).to have_content("Cart is currently empty")
+
+      it 'I can increment the quantity of an item in my cart' do 
+        visit "/items/#{@paper.id}"
+        click_on "Add To Cart"
+        
+        visit "/cart"
+
+        within "#cart-item-#{@paper.id}" do
+          within "##{@paper.id}-quantity" do 
+            expect(page).to have_content("2")
+          end
+          expect(page).to have_link("+") 
+          click_link("+")
+        end
+
+        expect(current_path).to eq("/cart") 
+        within "##{@paper.id}-quantity" do 
+          expect(page).to have_content("3")
+        end
       end
 
-      it "I do NOT see the link to empty my cart" do
-        visit '/cart'
-        expect(page).to_not have_link("Empty Cart")
-      end
+      it "I can decrement my cart item by one" do
+        visit "/cart"
 
+        within "#cart-item-#{@tire.id}" do
+          within("td:nth-child(4)") do
+            click_link("+")
+          end
+        end
+
+        within "#cart-item-#{@tire.id}" do
+          within "##{@tire.id}-quantity" do 
+            expect(page).to have_content("2")
+          end
+          expect(page).to have_link("-") 
+          click_link("-")
+        end
+
+        within "#cart-item-#{@tire.id}" do
+          within "##{@tire.id}-quantity" do 
+            expect(page).to have_content("1")
+          end
+          expect(page).to have_link("-") 
+          click_link("-")
+        end
+        expect(page).to have_no_content(@tire.name)
+      end
     end
   end
+  # describe "When I haven't added anything to my cart" do
+  #   describe "and visit my cart show page" do
+  #     it "I see a message saying my cart is empty" do
+  #       visit '/cart'
+  #       expect(page).to_not have_css(".cart-items")
+  #       expect(page).to have_content("Cart is currently empty")
+  #     end
+
+  #     it "I do NOT see the link to empty my cart" do
+  #       visit '/cart'
+  #       expect(page).to_not have_link("Empty Cart")
+  #     end
+
+  #   end
+  # end
 end
