@@ -154,11 +154,12 @@ RSpec.describe 'Merchant order show page' do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_user)
   end
-  it "US50 part I - Quantity requested is more than item inventory, I do not see a fulfill item button" do
+  it "US50 & US 51 part I - Quantity requested is more than item inventory, I do not see a fulfill item button" do
     visit "/merchant/orders/#{@order1.id}"
     
     within("#item-#{@item1.id}")do
       expect(page).to_not have_button("Fulfill Item")
+      expect(page).to have_content("Not enough inventory to fulfill item")
     end
 
     visit "/merchant/orders/#{@order2.id}"
