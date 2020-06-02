@@ -4,8 +4,8 @@ RSpec.describe "Merchant items index page" do
   before :each do
     @merchant1 = create(:merchant)
     @merchant2 = create(:merchant)
-    @item100 = create(:item, merchant: @merchant1, price: 100)
-    @item101 = create(:item, merchant: @merchant1, price: 101)
+    @item100 = create(:item, merchant: @merchant1, price: 100, never_ordered?: false)
+    @item101 = create(:item, merchant: @merchant1, price: 101, never_ordered?: false)
     @item102 = create(:item, merchant: @merchant1, price: 102)
     @item200 = create(:item, merchant: @merchant2, price: 200)
     @merchant_user = create(:user, name: "merchant user", role: 1, merchant_id: @merchant1.id)
@@ -79,8 +79,9 @@ RSpec.describe "Merchant items index page" do
     expect(page).to have_content(@item100.name)
     expect(page).to have_content(@item101.name)
     expect(page).to_not have_content(@item102.name)
-    expect(page).to have_content(@item200.name)
-    end
+    # expect(page).to have_content(@item200.name)
+  end
+
 
   it "US43 Merchant activates an item and it becomes visable" do
     visit items_path 
@@ -115,8 +116,33 @@ RSpec.describe "Merchant items index page" do
       expect(page).to_not have_button("Disable")
       click_button("Enable")
     end
+  end
+
+  it "US44 Items that have never been ordered can be deleted" do
+    visit merchant_items_path 
+
+    within("#item-#{@item100.id}")do
+      expect(page).to have_content("Never Ordered? false")
+      expect(page).to_not have_button("Delete")
+    end
+    within("#item-#{@item101.id}")do
+      expect(page).to have_content("Never Ordered? false")
+      expect(page).to_not have_button("Delete")
+    end
+    within("#item-#{@item102.id}")do
+      expect(page).to have_content("Never Ordered? true")
+      click_button("Delete")
+    end
+
+    expect(current_path).to eq(merchant_items_path)
+    expect(page).to have_content("Item #{@item102.id} has been deleted")
+    expect(page).to_not have_content(@item102.name)
+    expect(page).to have_content(@item100.name)
+    expect(page).to have_content(@item101.name)
+
 
   end
+  
   
   
   

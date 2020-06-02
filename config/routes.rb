@@ -68,7 +68,7 @@ Rails.application.routes.draw do
     get '/dashboard', to: "dashboard#show"
     # get '/items', to: 'items#index'
     get '/orders/:id', to: 'orders#show'
-    resources :items, only: [:index, :update]
+    resources :items, only: [:index, :update, :destroy]
   end
 
   patch '/item_orders/:id', to: 'item_orders#update'
