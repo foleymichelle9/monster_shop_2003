@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   patch "/profile/orders/:id", to: "user_orders#update"
 
   namespace :admin do
+    #/admin/dashboard
     get '/dashboard', to: "dashboard#index"
     resources :merchants, only: [:show, :index, :update]
   end
@@ -68,7 +69,7 @@ Rails.application.routes.draw do
     get '/dashboard', to: "dashboard#show"
     # get '/items', to: 'items#index'
     get '/orders/:id', to: 'orders#show'
-    resources :items, only: [:index, :update, :destroy]
+    resources :items, only: [:index, :update, :destroy, :new, :create]
   end
 
   patch '/item_orders/:id', to: 'item_orders#update'
