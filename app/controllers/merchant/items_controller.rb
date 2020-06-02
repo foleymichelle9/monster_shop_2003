@@ -16,7 +16,7 @@ class Merchant::ItemsController < Merchant::BaseController
       flash[:message] = "Item #{item.id} has been created"
       redirect_to merchant_items_path
     else
-      flash[:error] = "Input valid info"
+      flash[:error] = "You must enter a valid #{missing_params}"
       redirect_to new_merchant_item_path
     end
     
@@ -54,6 +54,14 @@ class Merchant::ItemsController < Merchant::BaseController
   def default_image
     default_url ='https://www.pngitem.com/pimgs/m/187-1877177_packaging-box-opened-outline-box-outline-hd-png.png'
     params[:item][:image] = default_url if params[:item][:image].empty?
+  end
+
+  def missing_params
+    missing_params = []
+    params[:item].each do |key, value|
+        missing_params << key if value == ""
+    end
+    missing_params.join(", ")
   end
   
   

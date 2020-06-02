@@ -56,24 +56,37 @@ RSpec.describe "Merchant Item New Page" do
     within("#item-#{@item101.id}")do
       expect(page).to have_content(@item101.name)
     end
-
-    
   end
+
+  it "US46 cannot create item if details are bad or missing" do
+    visit new_merchant_item_path
+
+     within("#new-item-form")do
+      fill_in "item[name]", with: "name1"
+      fill_in "item[description]", with: ""
+      fill_in "item[image]", with: ""
+      fill_in "item[price]", with: ""
+      fill_in "item[inventory]", with: ""
+
+      click_on "Create Item"
+    end
+
+    expect(current_path).to eq(new_merchant_item_path)
+    expect(page).to have_content("You must enter a valid description, price, inventory")
+
+    # expect(find_field("item[name]").value).to eq("name1")
+    # expect(find_field("item[description]").value).to eq("")
+
+
+  end
+  
 end
 
-# As a merchant employee
-# x- When I visit my items page
-# x- I see a link to add a new item
-# When I click on the link to add a new item
-# I see a form where I can add new information about an item, including:
-# x- the name of the item, which cannot be blank
-# x- a description for the item, which cannot be blank
-# x- a thumbnail image URL string, which CAN be left blank
-# x- a price which must be greater than $0.00
-# x- my current inventory count of this item which is 0 or greater
+# User Story 46, Merchant cannot add an item if details are bad/missing
 
-# When I submit valid information and submit the form
-# x - I am taken back to my items page
-# x - I see a flash message indicating my new item is saved
-# x - I see the new item on the page, and it is enabled and available for sale
-# x - If I left the image field blank, I see a placeholder image for the thumbnail
+# As a merchant employee
+# When I try to add a new item
+# x - If any of my data is incorrect or missing (except image)
+# x - Then I am returned to the form
+# x - I see one or more flash messages indicating each error I caused
+# x - All fields are re-populated with my previous data
