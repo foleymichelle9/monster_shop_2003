@@ -11,9 +11,9 @@
     <p>Inventory: <%=item.inventory %></p>
     <p>Active? <%=item.active? %></p>
     <% if item.active? %>
-      <%= button_to "Disable", "/merchant/items/#{item.id}?edit=active_false", method: :patch %>
+      <%= button_to "Disable", "/merchant/items/#{item.id}/active?tf=false", method: :patch %>
     <% else %>
-      <%= button_to "Enable", "/merchant/items/#{item.id}?edit=active_true", method: :patch %>
+      <%= button_to "Enable", "/merchant/items/#{item.id}/active?tf=true", method: :patch %>
     <% end %>
     <% if item.orders.empty? %>
       <%= button_to "Delete", "/merchant/items/#{item.id}", method: :delete %>

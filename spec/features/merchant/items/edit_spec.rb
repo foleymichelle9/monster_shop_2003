@@ -106,6 +106,26 @@ RSpec.describe "Merchant Edit Item Page" do
       expect(page).to have_content("Active? false")
       expect(page).to have_link("Edit")
     end
+  end
+
+  it "US48 cannot edit item if details are bad or missing" do
+    visit edit_merchant_item_path(@item100)
+
+     within("#edit-item-form")do
+      fill_in "item[name]", with: "name1"
+      fill_in "item[description]", with: ""
+      fill_in "item[image]", with: ""
+      fill_in "item[price]", with: ""
+      fill_in "item[inventory]", with: ""
+
+      click_on "Update Item"
+    end
+
+    expect(page).to have_content("You must enter a valid description, price, inventory")
+    expect(current_path).to eq(edit_merchant_item_path(@item100))
+
+    # expect(find_field("item[name]").value).to eq("name1")
+    # expect(find_field("item[description]").value).to eq("")
 
 
   end

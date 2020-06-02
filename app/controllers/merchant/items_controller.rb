@@ -27,27 +27,16 @@ class Merchant::ItemsController < Merchant::BaseController
     @item = Item.find(params[:id])
   end
   
-  
-  
-  
   def update
     item = Item.find(params[:id])
-    case params[:edit]
-    when "active_false"
-      item.update(active?: false)
-      flash[:notice] = "You have disabled item #{item.id}"
-    when "active_true"
-      item.update(active?: true)
-      flash[:notice] = "You have enabled item #{item.id}"
-    when "item"
-      item.update(item_params)
-      if item.save 
-        flash[:notice] = "Item #{item.id} has been updated"
-      else 
-        flash[:error] = "You must enter a valid #{missing_params}"
-      end
-    end
+    item.update(item_params)
+    if item.save 
+      flash[:notice] = "Item #{item.id} has been updated"
     redirect_to merchant_items_path 
+    else 
+      flash[:error] = "You must enter a valid #{missing_params}"
+      redirect_to edit_merchant_item_path(item)
+    end
   end
 
   def destroy
@@ -55,6 +44,20 @@ class Merchant::ItemsController < Merchant::BaseController
     flash[:notice] = "Item #{params[:id]} has been deleted"
     redirect_to merchant_items_path 
   end
+
+  def enable_disable 
+    item = Item.find(params[:id])
+    case params[:tf]
+    when "false"
+      item.update(active?: false)
+      flash[:notice] = "You have disabled item #{item.id}"
+    when "true"
+      item.update(active?: true)
+      flash[:notice] = "You have enabled item #{item.id}"
+    end
+    redirect_to merchant_items_path 
+  end
+  
   
 
   private 
