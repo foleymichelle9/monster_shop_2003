@@ -1,5 +1,7 @@
 <h1>Merchant <%=@merchant.name %> Item Index</h1>
 
+<%= link_to 'Add New Item', new_merchant_item_path %>
+
 <% @merchant.items.each do |item| %>
   <section id="item-<%=item.id%>">
     <h3>Name: <%=item.name %></h3>
@@ -9,14 +11,15 @@
     <p>Inventory: <%=item.inventory %></p>
     <p>Active? <%=item.active? %></p>
     <% if item.active? %>
-      <%= button_to "Disable", "/merchant/items/#{item.id}?active=false", method: :patch %>
+      <%= button_to "Disable", "/merchant/items/#{item.id}/active?tf=false", method: :patch %>
     <% else %>
-      <%= button_to "Enable", "/merchant/items/#{item.id}?active=true", method: :patch %>
+      <%= button_to "Enable", "/merchant/items/#{item.id}/active?tf=true", method: :patch %>
     <% end %>
     <% if item.orders.empty? %>
       <%= button_to "Delete", "/merchant/items/#{item.id}", method: :delete %>
     <% else %>
       <p>Cannot delete ordered items</p>
-    <% end %>
+    <% end %><br>
+    <%= link_to 'Edit', edit_merchant_item_path(item) %>
   </section>
 <% end %>

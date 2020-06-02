@@ -60,16 +60,20 @@ Rails.application.routes.draw do
   patch "/profile/orders/:id", to: "user_orders#update"
 
   namespace :admin do
+    #/admin/dashboard
     get '/dashboard', to: "dashboard#index"
+    patch '/merchants/:id/active', to: 'merchants#enable_disable'
     resources :merchants, only: [:show, :index, :update]
   end
 
   namespace :merchant do
     get '/dashboard', to: "dashboard#show"
-    # get '/items', to: 'items#index'
+    patch '/items/:id/active', to: 'items#enable_disable'
     get '/orders/:id', to: 'orders#show'
-    resources :items, only: [:index, :update, :destroy]
+    resources :items, only: [:index, :update, :destroy, :new, :create, :edit]
+
   end
+  
 
   patch '/item_orders/:id', to: 'item_orders#update'
 end
