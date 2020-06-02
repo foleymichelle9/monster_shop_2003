@@ -13,4 +13,8 @@ class User < ApplicationRecord
   has_secure_password
 
   enum role: {regular: 0, merchant: 1, admin: 2}
+
+  def full_address
+    "#{address}, #{city}, #{state}, #{zip}"
+  end
 end

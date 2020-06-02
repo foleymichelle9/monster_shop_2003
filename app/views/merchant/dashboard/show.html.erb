@@ -10,3 +10,14 @@
 </center>
 <% else %>
 <% end %>
+<br><br>
+<section class="grid-container">
+  <% @merchant_orders.each do |order| %>
+  <section class="grid-item" id='order-<%=order.id%>'>
+    <p>Order #: <%=link_to order.id, "/merchant/orders/#{order.id}" %> </p>
+    <p>Date: <%= order.created_at %></p>
+    <p>Total Items: <%= order.total_items %></p>
+    <p>Total Value: <%= order.grandtotal %></p>
+  </section>
+  <% end %>
+</section>

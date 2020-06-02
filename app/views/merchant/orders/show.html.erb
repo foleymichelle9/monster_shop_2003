@@ -1,11 +1,20 @@
+<center>
 <section id="order-<%=@order.id%>">
   <h1>Merchant Order <%= @order.id%></h1>
   <p>Order Status: <%=@order.status %></p>
+  <p>Recipients Name: <%=@order.user.name %></p>
+  <p>Recipient's Address: <%=@order.user.full_address %></p>
 </section>
+</center>
+
+<br><br>
 
 <% @merchant_item_orders.each do |item_order| %>
   <section id="item-<%=item_order.item. id%>">
-    <p><%=item_order.item.name %></p>
+    <p><%= link_to item_order.item.name, "/items/#{item_order.item.id}" %></p>
+    <img class="resize" src=<%= item_order.item.image %> alt=<%= "#{item_order.item.id}" %>>
+    <p>Price: <%= number_to_currency(item_order.item.price) %></p>
+    <p>Quantity: <%= item_order.quantity %></p>
     <p>Item Order Status: <%=item_order.status %></p>
     <%= button_to 'Fulfill Item', "/item_orders/#{item_order.id}", method: :patch %>
   </section>
