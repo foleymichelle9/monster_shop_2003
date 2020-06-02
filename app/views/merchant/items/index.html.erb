@@ -1,1 +1,22 @@
-<!-- This is the blank merchant/items index page  -->
+<h1>Merchant <%=@merchant.name %> Item Index</h1>
+
+<% @merchant.items.each do |item| %>
+  <section id="item-<%=item.id%>">
+    <h3>Name: <%=item.name %></h3>
+    <p><img class="img" src="<%=item.image%>" alt="item image"> </p>
+    <p>Description: <%=item.description %></p>
+    <p>Price: <%=number_to_currency(item.price) %></p>
+    <p>Inventory: <%=item.inventory %></p>
+    <p>Active? <%=item.active? %></p>
+    <% if item.active? %>
+      <%= button_to "Disable", "/merchant/items/#{item.id}?active=false", method: :patch %>
+    <% else %>
+      <%= button_to "Enable", "/merchant/items/#{item.id}?active=true", method: :patch %>
+    <% end %>
+    <% if item.orders.empty? %>
+      <%= button_to "Delete", "/merchant/items/#{item.id}", method: :delete %>
+    <% else %>
+      <p>Cannot delete ordered items</p>
+    <% end %>
+  </section>
+<% end %>

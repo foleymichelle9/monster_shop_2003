@@ -16,7 +16,9 @@
     <p>Price: <%= number_to_currency(item_order.item.price) %></p>
     <p>Quantity: <%= item_order.quantity %></p>
     <p>Item Order Status: <%=item_order.status %></p>
-    <%= button_to 'Fulfill Item', "/item_orders/#{item_order.id}", method: :patch %>
+    <% if item_order.status == "unfulfilled" %>
+      <%= button_to 'Fulfill Item', "/item_orders/#{item_order.id}", method: :patch %>
+    <% end %>
   </section>
 
 <% end %>

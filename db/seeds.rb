@@ -8,14 +8,16 @@
 
 Review.destroy_all
 Merchant.destroy_all
+Order.destroy_all
+ItemOrder.destroy_all
 Item.destroy_all
 Order.destroy_all
 ItemOrder.destroy_all
 User.destroy_all
-
 #merchants
 bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+
 computer_shop = Merchant.create(name: "Zed's Computers", address: '125 Computer St.', city: 'Denver', state: 'CO', zip: 81111)
 
 #bike_shop items
@@ -38,6 +40,7 @@ dog_pram = dog_shop.items.create(name: "Dog pram", description: "Carry your dog 
 review3 = pull_toy.reviews.create(title: "Crappy pull toy", content: "Dog hates this", rating: 1)
 review4 = dog_food.reviews.create(title: "Mediocore dog food", content: "Dog doesn't love it or hate it", rating: 2)
 review5 = dog_food.reviews.create(title: "Good, not great dog food", content: "Acceptable for my dog", rating: 4)
+
 
 #computer_shop items
 laptop = computer_shop.items.create(name: "Laptop", description: "Fastest computer around!", price: 1000, image: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6356/6356671_sd.jpg", inventory: 20)
@@ -67,6 +70,7 @@ order2 = Order.create(name: "User Name2", address: "Address 2", city: "City 2", 
 order3 = Order.create(name: "User Name3", address: "Address 3", city: "City 3", state: "State 3", zip: 33333, user_id: regular3.id)      
 order4 = Order.create(name: "User Name1", address: "Address 1", city: "City 1", state: "State 1", zip: 11111, user_id: regular1.id)      
 
+
 #item_orders
 item_order1 = ItemOrder.create(order: order1, item: tire, price: tire.price, quantity: 11)
 item_order2 = ItemOrder.create(order: order1, item: pull_toy, price: pull_toy.price, quantity: 12)
@@ -75,6 +79,7 @@ item_order4 = ItemOrder.create(order: order2, item: laptop, price: laptop.price,
 item_order5 = ItemOrder.create(order: order2, item: tire, price: tire.price, quantity: 2)
 item_order6 = ItemOrder.create(order: order2, item: keyboard, price: keyboard.price, quantity: 2)
 item_order7 = ItemOrder.create(order: order3, item: helmet, price: helmet.price, quantity: 1)
-item_order7 = ItemOrder.create(order: order3, item: bicycle, price: bicycle.price, quantity: 1)
-item_order7 = ItemOrder.create(order: order4, item: mouse, price: mouse.price, quantity: 5)
-item_order7 = ItemOrder.create(order: order4, item: keyboard, price: keyboard.price, quantity: 2)
+item_order8 = ItemOrder.create(order: order3, item: bicycle, price: bicycle.price, quantity: 1)
+item_order9 = ItemOrder.create(order: order4, item: mouse, price: mouse.price, quantity: 5)
+item_order10 = ItemOrder.create(order: order4, item: keyboard, price: keyboard.price, quantity: 2)
+

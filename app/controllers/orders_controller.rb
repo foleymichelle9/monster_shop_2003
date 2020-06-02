@@ -29,6 +29,7 @@ class OrdersController < BaseController
     if params[:admin] == "true"
       order = Order.find(params[:id])
       order.update(status: 2)
+      flash[:notice] = "Order #{order.id} has been shipped"
       redirect_to '/admin/dashboard'
     end
   end
