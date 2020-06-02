@@ -10,9 +10,9 @@ RSpec.describe 'Merchant order show page' do
     @merchant2 = create(:merchant)
     @merchant1_user = create(:user, merchant_id: @merchant1.id, role: 1 )
     @merchant2_user = create(:user, merchant_id: @merchant2.id, role: 1 )
-    @item1 = create(:item, merchant: @merchant1, price: 50)
-    @item2 = create(:item, merchant: @merchant1, price: 10)
-    @item3 = create(:item, merchant: @merchant2)
+    @item1 = create(:item, merchant: @merchant1, price: 50, inventory: 50)
+    @item2 = create(:item, merchant: @merchant1, price: 10, inventory: 50)
+    @item3 = create(:item, merchant: @merchant2, inventory: 50)
   
     visit '/login'
     within("#login-form")do
@@ -52,7 +52,7 @@ RSpec.describe 'Merchant order show page' do
     expect(current_path).to eq('/merchant/dashboard')
   end
   
-  it "US31 part I - merchant can fulfil orders" do
+  it "US31 part I - merchant can fulfill orders" do
     visit "/merchant/orders/#{@order1.id}"
     
     within("#item-#{@item1.id}")do
@@ -136,3 +136,62 @@ RSpec.describe 'Merchant order show page' do
     end
   end
 end
+RSpec.describe 'Merchant order show page' do
+  before :each do
+    @regular_user = create(:user)
+
+    @merchant1 = create(:merchant)
+    @merchant_user = create(:user, merchant_id: @merchant1.id, role: 1 )
+
+    @item1 = create(:item, merchant: @merchant1, price: 50, inventory: 2)
+    @item2 = create(:item, merchant: @merchant1, price: 10, inventory: 5)
+
+    @order1 = create(:order, user_id: @regular_user.id)    
+    @order2 = create(:order, user_id: @regular_user.id)
+    
+    @item_order1 = ItemOrder.create(order: @order1, item: @item1, price: @item1.price, quantity: 4)
+    @item_order2 = ItemOrder.create(order: @order2, item: @item2, price: @item2.price, quantity: 4)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_user)
+  end
+  it "US50 part I - Quantity requested is more than item inventory, I do not see a fulfill item button" do
+    visit "/merchant/orders/#{@order1.id}"
+    
+    within("#item-#{@item1.id}")do
+      expect(page).to_not have_button("Fulfill Item")
+    end
+
+    visit "/merchant/orders/#{@order2.id}"
+  
+    within("#item-#{@item2.id}")do
+      expect(page).to have_button("Fulfill Item")
+    end
+  end 
+  it "US50 part II -Fulfilling an order permanently reduces an item's inventory by desired quantity" do
+    visit "/merchant/orders/#{@order2.id}"
+
+    expect(@item2.inventory).to eq(5)
+
+    within("#item-#{@item2.id}")do
+      click_button("Fulfill Item")
+    end
+
+    @item2.reload
+
+    expect(@item2.inventory).to eq(1)
+  end 
+end
+
+# As a merchant employee
+# When I visit an order show page from my dashboard
+# For each item of mine in the order
+# If the user's desired quantity is equal to or less than my current 
+# inventory quantity for that item
+# And I have not already "fulfilled" that item:
+# - Then I see a button or link to "fulfill" that item
+# - When I click on that link or button I am returned to the order show page
+# - I see the item is now fulfilled
+# - I also see a flash message indicating that I have fulfilled that item
+# - the item's inventory quantity is permanently reduced by the user's desired quantity
+
+# If I have already fulfilled this item, I see text indicating such.
