@@ -89,4 +89,4 @@ end
 # x - If any of my data is incorrect or missing (except image)
 # x - Then I am returned to the form
 # x - I see one or more flash messages indicating each error I caused
-# x - All fields are re-populated with my previous data
+#  All fields are re-populated with my previous data

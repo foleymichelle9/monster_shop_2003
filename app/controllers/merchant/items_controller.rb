@@ -21,6 +21,12 @@ class Merchant::ItemsController < Merchant::BaseController
     end
     
   end
+
+  def edit
+    @merchant = Merchant.find(current_user.merchant_id)
+    @item = Item.find(params[:id])
+  end
+  
   
   
   
@@ -33,6 +39,13 @@ class Merchant::ItemsController < Merchant::BaseController
     when "active_true"
       item.update(active?: true)
       flash[:notice] = "You have enabled item #{item.id}"
+    when "item"
+      item.update(item_params)
+      if item.save 
+        flash[:notice] = "Item #{item.id} has been updated"
+      else 
+        flash[:error] = "You must enter a valid #{missing_params}"
+      end
     end
     redirect_to merchant_items_path 
   end

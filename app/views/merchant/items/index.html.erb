@@ -19,6 +19,7 @@
       <%= button_to "Delete", "/merchant/items/#{item.id}", method: :delete %>
     <% else %>
       <p>Cannot delete ordered items</p>
-    <% end %>
+    <% end %><br>
+    <%= link_to 'Edit', edit_merchant_item_path(item) %>
   </section>
 <% end %>
