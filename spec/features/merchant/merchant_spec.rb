@@ -57,16 +57,50 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
     end
   end
 end
+RSpec.describe 'merchant dashboard show page', type: :feature do
+  describe 'US-35 As a merchant' do
+    before(:each) do
 
-# User Story 35, Merchant Dashboard displays Orders
+      @merchant1 = create(:merchant)
+      @user1 = create(:user, role: "merchant", merchant_id: @merchant1.id)
 
-# As a merchant employee
-# When I visit my merchant dashboard ("/merchant")
-# If any users have pending orders containing items I sell
-# Then I see a list of these orders.
-# Each order listed includes the following information:
-# - the ID of the order, which is a link to the order show 
-# page ("/merchant/orders/15")
-# - the date the order was made
-# - the total quantity of my items in the order
-# - the total value of my items for that order
+      @item1 = create(:item, merchant_id: @merchant1.id)
+      @item2 = create(:item, merchant_id: @merchant1.id)
+      @item3 = create(:item, merchant_id: @merchant1.id)
+      @item4 = create(:item, merchant_id: @merchant1.id)
+      @item5 = create(:item)
+      @item6 = create(:item, merchant_id: @merchant1.id)
+
+      @order1 = create(:order, status: "pending")
+      @order2 = create(:order, status: "packaged")
+      @order3 = create(:order, status: "pending")
+      @order4 = create(:order, status: "pending")
+
+      ItemOrder.create!(order: @order1, item: @item1, price: @item1.price, quantity: 1, status: "unfulfilled")
+      ItemOrder.create!(order: @order1, item: @item2, price: @item2.price, quantity: 1, status: "unfulfilled")
+      ItemOrder.create!(order: @order2, item: @item3, price: @item3.price, quantity: 1, status: "fulfilled")
+      ItemOrder.create!(order: @order3, item: @item4, price: @item4.price, quantity: 1, status: "unfulfilled")
+      ItemOrder.create!(order: @order3, item: @item1, price: @item1.price, quantity: 1, status: "unfulfilled")
+      ItemOrder.create!(order: @order4, item: @item5, price: @item5.price, quantity: 1, status: "unfulfilled")
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
+      
+      visit merchant_dashboard_path
+    end
+    it 'All pending orders with items I sell are listed' do
+
+      within("#order-#{@order1.id}") do
+        expect(page).to have_link("#{@order1.id}", :href=> "/merchant/orders/#{@order1.id}")
+        expect(page).to have_content(@order1.created_at)
+        expect(page).to have_content(@order1.total_items)
+        expect(page).to have_content(@order1.grandtotal)
+      end
+      within("#order-#{@order3.id}") do
+        expect(page).to have_link("#{@order3.id}", :href=> "/merchant/orders/#{@order3.id}")
+        expect(page).to have_content(@order3.created_at)
+        expect(page).to have_content(@order3.total_items)
+        expect(page).to have_content(@order3.grandtotal)
+      end
+    end
+  end 
+end 
