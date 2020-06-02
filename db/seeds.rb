@@ -64,7 +64,6 @@ merchant3 = User.create!(name: "Merchant Name3", address: "merchant address", ci
 admin1 = User.create!(name: "Admin Name1", address: "admin address", city: "admin city", state: "state", zip: "admin zip", email: "admin1", password: "admin", role: 2)
 admin2 = User.create!(name: "Admin Name1", address: "admin address", city: "admin city", state: "state", zip: "admin zip", email: "admin2", password: "admin", role: 2)
 
-
 #Orders
 order1 = Order.create(name: "User Name1", address: "Address 1", city: "City 1", state: "State 1", zip: 11111, user_id: regular1.id)      
 order2 = Order.create(name: "User Name2", address: "Address 2", city: "City 2", state: "State 2", zip: 22222, user_id: regular2.id)      
