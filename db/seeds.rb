@@ -41,7 +41,7 @@ review3 = pull_toy.reviews.create(title: "Crappy pull toy", content: "Dog hates 
 review4 = dog_food.reviews.create(title: "Mediocore dog food", content: "Dog doesn't love it or hate it", rating: 2)
 review5 = dog_food.reviews.create(title: "Good, not great dog food", content: "Acceptable for my dog", rating: 4)
 
->>>>>>> master
+
 #computer_shop items
 laptop = computer_shop.items.create(name: "Laptop", description: "Fastest computer around!", price: 1000, image: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6356/6356671_sd.jpg", inventory: 20)
 keyboard = computer_shop.items.create(name: "Keyboard", description: "Bluetooth keyboard", price: 50, image: "https://images-na.ssl-images-amazon.com/images/I/81PLqxtrJ3L._AC_SL1500_.jpg", inventory: 15)
@@ -63,7 +63,7 @@ merchant2 = User.create!(name: "Merchant Name2", address: "merchant address", ci
 merchant3 = User.create!(name: "Merchant Name3", address: "merchant address", city: "merchant city", state: "state", zip: "merchant zip", email: "merchant_computer", password: "merchant", role: 1, merchant_id: computer_shop.id)
 admin1 = User.create!(name: "Admin Name1", address: "admin address", city: "admin city", state: "state", zip: "admin zip", email: "admin1", password: "admin", role: 2)
 admin2 = User.create!(name: "Admin Name1", address: "admin address", city: "admin city", state: "state", zip: "admin zip", email: "admin2", password: "admin", role: 2)
->>>>>>> master
+
 
 #Orders
 order1 = Order.create(name: "User Name1", address: "Address 1", city: "City 1", state: "State 1", zip: 11111, user_id: regular1.id)      
