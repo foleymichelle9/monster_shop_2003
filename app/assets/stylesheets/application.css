@@ -160,3 +160,8 @@ tr:nth-child(even) {
  .white {
  color: white;
  }
+
+ img.resize {
+  max-width:15%;
+  max-height:15%;
+}
