@@ -90,13 +90,13 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
     it 'All pending orders with items I sell are listed' do
 
       within("#order-#{@order1.id}") do
-        expect(page).to have_content(@order1.id)
+        expect(page).to have_link("#{@order1.id}", :href=> "/merchant/orders/#{@order1.id}")
         expect(page).to have_content(@order1.created_at)
         expect(page).to have_content(@order1.total_items)
         expect(page).to have_content(@order1.grandtotal)
       end
       within("#order-#{@order3.id}") do
-        expect(page).to have_content(@order3.id)
+        expect(page).to have_link("#{@order3.id}", :href=> "/merchant/orders/#{@order3.id}")
         expect(page).to have_content(@order3.created_at)
         expect(page).to have_content(@order3.total_items)
         expect(page).to have_content(@order3.grandtotal)
