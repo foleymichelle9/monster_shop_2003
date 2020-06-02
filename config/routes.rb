@@ -70,7 +70,7 @@ Rails.application.routes.draw do
     get '/dashboard', to: "dashboard#show"
     patch '/items/:id/active', to: 'items#enable_disable'
     get '/orders/:id', to: 'orders#show'
-    resources :items, only: [:index, :update, :destroy]
+    resources :items, only: [:index, :update, :destroy, :new, :create, :edit]
     patch '/item_orders/:id', to: 'item_orders#update'
   end
 end
