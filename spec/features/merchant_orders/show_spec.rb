@@ -181,17 +181,3 @@ RSpec.describe 'Merchant order show page' do
     expect(@item2.inventory).to eq(1)
   end 
 end
-
-# As a merchant employee
-# When I visit an order show page from my dashboard
-# For each item of mine in the order
-# If the user's desired quantity is equal to or less than my current 
-# inventory quantity for that item
-# And I have not already "fulfilled" that item:
-# - Then I see a button or link to "fulfill" that item
-# - When I click on that link or button I am returned to the order show page
-# - I see the item is now fulfilled
-# - I also see a flash message indicating that I have fulfilled that item
-# - the item's inventory quantity is permanently reduced by the user's desired quantity
-
-# If I have already fulfilled this item, I see text indicating such.
