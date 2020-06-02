@@ -10,8 +10,8 @@ RSpec.describe 'Merchant order show page' do
     @merchant2 = create(:merchant)
     @merchant1_user = create(:user, merchant_id: @merchant1.id, role: 1 )
     @merchant2_user = create(:user, merchant_id: @merchant2.id, role: 1 )
-    @item1 = create(:item, merchant: @merchant1)
-    @item2 = create(:item, merchant: @merchant1)
+    @item1 = create(:item, merchant: @merchant1, price: 50)
+    @item2 = create(:item, merchant: @merchant1, price: 10)
     @item3 = create(:item, merchant: @merchant2)
   
     visit '/login'
@@ -110,8 +110,29 @@ RSpec.describe 'Merchant order show page' do
     within("#order-#{@order1.id}")do
       expect(page).to have_content("Order Status: packaged")
     end
-
   end
-  
-  
+  it "US49 part I - I see the recepients name and address for order" do
+    visit "/merchant/orders/#{@order1.id}"
+
+    within("#order-#{@order1.id}")do
+      expect(page).to have_content(@order1.user.name)
+      expect(page).to have_content(@order1.user.full_address)
+    end
+  end
+  it "US49 part II - I see name, image, price, and quantity for each item" do
+    visit "/merchant/orders/#{@order1.id}"
+
+    within("#item-#{@item1.id}")do
+      expect(page).to have_content(@item1.name)
+      expect(page).to have_xpath("//img[@src = '#{@item1.image}' and @alt= '#{@item1.id}']")
+      expect(page).to have_content("$50.00")
+      expect(page).to have_content(@item1.item_orders.first.quantity)
+    end
+    within("#item-#{@item2.id}")do
+      expect(page).to have_content(@item2.name)
+      expect(page).to have_xpath("//img[@src = '#{@item2.image}' and @alt= '#{@item2.id}']")
+      expect(page).to have_content("$10.00")
+      expect(page).to have_content(@item2.item_orders.first.quantity)
+    end
+  end
 end
