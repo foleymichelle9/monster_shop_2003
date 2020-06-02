@@ -4,11 +4,18 @@ RSpec.describe "Merchant items index page" do
   before :each do
     @merchant1 = create(:merchant)
     @merchant2 = create(:merchant)
-    @item100 = create(:item, merchant: @merchant1, price: 100, never_ordered?: false)
-    @item101 = create(:item, merchant: @merchant1, price: 101, never_ordered?: false)
+    @item100 = create(:item, merchant: @merchant1, price: 100)
+    @item101 = create(:item, merchant: @merchant1, price: 101)
     @item102 = create(:item, merchant: @merchant1, price: 102)
     @item200 = create(:item, merchant: @merchant2, price: 200)
     @merchant_user = create(:user, name: "merchant user", role: 1, merchant_id: @merchant1.id)
+
+    @order1 = create(:order)
+
+    ItemOrder.create(order: @order1, item: @item100, price:1, quantity: 100)
+    ItemOrder.create(order: @order1, item: @item101, price:11, quantity: 101)
+
+
 
     visit '/login'
     within("#login-form")do
@@ -122,15 +129,15 @@ RSpec.describe "Merchant items index page" do
     visit merchant_items_path 
 
     within("#item-#{@item100.id}")do
-      expect(page).to have_content("Never Ordered? false")
+      expect(page).to have_content("Cannot delete ordered items")
       expect(page).to_not have_button("Delete")
     end
     within("#item-#{@item101.id}")do
-      expect(page).to have_content("Never Ordered? false")
+      expect(page).to have_content("Cannot delete ordered items")
       expect(page).to_not have_button("Delete")
     end
     within("#item-#{@item102.id}")do
-      expect(page).to have_content("Never Ordered? true")
+      expect(page).to_not have_content("Cannot delete ordered items")
       click_button("Delete")
     end
 

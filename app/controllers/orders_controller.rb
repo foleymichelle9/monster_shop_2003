@@ -9,7 +9,6 @@ class OrdersController < BaseController
     order = Order.create(order_params)
     if order.save
       cart.items.each do |item,quantity|
-        item.update(never_ordered?: false)
         order.item_orders.create({
           item: item,
           quantity: quantity,

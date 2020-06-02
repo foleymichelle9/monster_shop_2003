@@ -13,9 +13,10 @@
     <% else %>
       <%= button_to "Enable", "/merchant/items/#{item.id}?active=true", method: :patch %>
     <% end %>
-    <p>Never Ordered? <%=item.never_ordered? %></p>
-    <% if item.never_ordered? %>
+    <% if item.orders.empty? %>
       <%= button_to "Delete", "/merchant/items/#{item.id}", method: :delete %>
+    <% else %>
+      <p>Cannot delete ordered items</p>
     <% end %>
   </section>
 <% end %>
