@@ -1,4 +1,4 @@
-class ItemOrdersController < ApplicationController
+class Merchant::ItemOrdersController < Merchant::BaseController
 
   def update
     item_order = ItemOrder.find(params[:id])
