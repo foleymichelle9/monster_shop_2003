@@ -63,6 +63,7 @@ Rails.application.routes.draw do
     #/admin/dashboard
     get '/dashboard', to: "dashboard#index"
     patch '/merchants/:id/active', to: 'merchants#enable_disable'
+    get '/users/:user_id/orders/:id', to: 'orders#show'
     resources :merchants, only: [:show, :index, :update]
   end
 
@@ -70,6 +71,7 @@ Rails.application.routes.draw do
     get '/dashboard', to: "dashboard#show"
     patch '/items/:id/active', to: 'items#enable_disable'
     get '/orders/:id', to: 'orders#show'
+
     resources :items, only: [:index, :update, :destroy, :new, :create, :edit]
 
   end
