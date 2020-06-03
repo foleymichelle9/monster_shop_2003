@@ -16,7 +16,7 @@
     <p>Price: <%= number_to_currency(item_order.item.price) %></p>
     <p>Quantity: <%= item_order.quantity %></p>
     <p>Item Order Status: <%=item_order.status %></p>
-    <% if item_order.has_inventory_and_unfulfilled %>
+    <% if item_order.has_inventory_and_unfulfilled? %>
       <%= button_to 'Fulfill Item', "/merchant/item_orders/#{item_order.id}", method: :patch %>
     <% elsif item_order.status == "fulfilled" %>  
       <p>This item has been fulfilled</p>

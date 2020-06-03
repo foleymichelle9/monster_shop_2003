@@ -23,6 +23,17 @@ describe ItemOrder, type: :model do
 
       expect(item_order_1.subtotal).to eq(200)
     end
+    it 'has_inventory_and_unfulfilled' do
+
+      @merchant1 = create(:merchant)
+      @item1 = create(:item, merchant_id: @merchant1.id, inventory: 5)
+      @order1 = create(:order, status: "pending")
+      ItemOrder.create!(order: @order1, item: @item1, price: @item1.price, quantity: 1, status: "unfulfilled")
+
+      item_order = ItemOrder.last
+
+      expect(item_order.has_inventory_and_unfulfilled?).to eq(true)
+    end
   end
 
 end
