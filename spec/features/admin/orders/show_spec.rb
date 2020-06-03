@@ -77,6 +77,15 @@ RSpec.describe "Admin Order Show Page"do
       expect(page).to have_content(@item_order1.quantity)
       expect(page).to have_css("img[src*='#{@item1.image}']")
     end
+    within("#item-#{@item2.id}")do
+      expect(page).to have_content(@item2.name)
+      expect(page).to have_content(@item2.description)
+      expect(page).to have_content(@merchant1.name)
+      expect(page).to have_content(@item_order2.price)
+      expect(page).to have_content(@item_order2.quantity)
+      expect(page).to have_css("img[src*='#{@item2.image}']")
+    end
+    expect(page).to_not have_content(@item3.name)
 
     within("#grandtotal")do
       expect(page).to have_content("Total: $#{@order10.grandtotal}")
@@ -84,7 +93,14 @@ RSpec.describe "Admin Order Show Page"do
   end
 
   it "US56 Part II Admin Order page from User Page" do
-    
+    visit admin_users_path
+
+    click_on @regular1.name
+    expect(current_path).to eq(admin_user_path(@regular1))
+
+    click_on "Order #{@order10.id}"
+    expect(current_path).to eq("/admin/users/#{@regular1.id}/orders/#{@order10.id}")
+
   end
   
 
