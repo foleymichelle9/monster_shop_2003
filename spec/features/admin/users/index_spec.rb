@@ -31,26 +31,16 @@ RSpec.describe 'As an admin user' do
     end
 
     it 'I see all users in the system' do
-      visit admin_users_path
+      within 'nav' do
+        click_link"Users"
+      end 
+      expect(current_path).to eq(admin_users_path)
 
       expect(page).to have_link(@merchant1_user.name) 
       expect(page).to have_link(@merchant2_user.name) 
       expect(page).to have_link(@merchant3_user.name) 
       expect(page).to have_content(@merchant1_user.created_at.strftime("%m-%d-%y"))
       expect(page).to have_content(@merchant1_user.role) 
-    #   binding.pry
-    # save_and_open_page
     end
   end
 end
-
-
-
-# As an admin user
-# When I click the "Users" link in the nav (only visible to admins)
-# Then my current URI route is "/admin/users"
-# Only admin users can reach this path.
-# I see all users in the system
-# Each user's name is a link to a show page for that user ("/admin/users/5")
-# Next to each user's name is the date they registered
-# Next to each user's name I see what type of user they are
