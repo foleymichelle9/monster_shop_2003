@@ -10,4 +10,7 @@ class ItemOrder <ApplicationRecord
     price * quantity
   end
 
+  def has_inventory_and_unfulfilled?
+    (status == "unfulfilled") && (quantity <= item.inventory)
+  end
 end

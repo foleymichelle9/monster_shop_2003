@@ -65,6 +65,8 @@ Rails.application.routes.draw do
     patch '/merchants/:id/active', to: 'merchants#enable_disable'
     get '/users/:user_id/orders/:id', to: 'orders#show'
     resources :merchants, only: [:show, :index, :update]
+    resources :users, only: [:show, :index]
+    # get '/users/:user_id/orders', to: 'admin_users#order_index'
   end
 
   namespace :merchant do
@@ -73,7 +75,7 @@ Rails.application.routes.draw do
     get '/orders/:id', to: 'orders#show'
 
     resources :items, only: [:index, :update, :destroy, :new, :create, :edit]
+    patch '/item_orders/:id', to: 'item_orders#update'
   end
 
-  patch '/item_orders/:id', to: 'item_orders#update'
 end

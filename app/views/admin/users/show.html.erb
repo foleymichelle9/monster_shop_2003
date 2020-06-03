@@ -1,0 +1,14 @@
+<h2><%= @user.name %></h2>
+<p> Address: <%= @user.address %></p><br/>
+<p>City: <%= @user.city%></p><br>
+<p>State: <%= @user.state%></p><br>
+<p>Zip: <%= @user.zip%></p><br>
+<p>Email: <%= @user.email%></p><br>
+
+<% if !@orders.empty? %>
+  <%
+=begin%>
+ <%= link_to 'Their Orders', "/admin/users/#{@user.id}/orders" %> 
+<%
+=end%>
+<% end %>
