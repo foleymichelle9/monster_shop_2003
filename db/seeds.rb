@@ -31,7 +31,7 @@ review1 = tire.reviews.create(title: "Great tire", content: "Will buy this tire 
 review2 = helmet.reviews.create(title: "Cool helmet", content: "Very safe", rating: 3)
 
 #dog_shop items
-pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "https://m.media-amazon.com/images/I/61lYdX-EdfL._AC_SS350_.jpg", inventory: 32)
 dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", inventory: 21)
 dog_food = dog_shop.items.create(name: "Dog Food", description: "Super tasty", price: 30, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRgRJErkeYhfadwU8k2Jux0Hhp7KsvijgO61Ia2T__NWpPl3cLZ&usqp=CAU", inventory: 15)
 dog_pram = dog_shop.items.create(name: "Dog pram", description: "Carry your dog in style", price: 200, image: "https://assets.petco.com/petco/image/upload/f_auto,q_auto,t_ProductDetail-large/2327664-center-2", inventory: 0, active?: false)
