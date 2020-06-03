@@ -73,9 +73,7 @@ Rails.application.routes.draw do
     get '/orders/:id', to: 'orders#show'
 
     resources :items, only: [:index, :update, :destroy, :new, :create, :edit]
-
   end
-  
 
   patch '/item_orders/:id', to: 'item_orders#update'
 end

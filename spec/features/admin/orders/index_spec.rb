@@ -64,7 +64,7 @@ RSpec.describe "Admin Order Index page"do
     end
     # this isnt working for some reason? need help.
 
-    # expect(@order11.id).to appear_before(@order3.id)
+    # expect("#packaged").to appear_before("#pending")
     # expect(@order3.id).to appear_before(@order2.id)
     # expect(@order2.id).to appear_before(@order10.id)
     
