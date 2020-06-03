@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Monster Shop</title>
-    <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
-  </head>
+<head>
+  <title>Monster Shop</title>
+  <%= csrf_meta_tags %>
 
-  <body>
-    <nav class = "topnav">
-       <p class="white"> <%= "Logged in as #{current_user.name}" if current_user %></p>
-      <%= link_to "Home", "/"%>
-      <%= link_to "All Merchants", "/merchants"%>
-      <%= link_to "All Items", "/items"%>
-      <%= link_to "Cart: #{cart.total_items}", "/cart" %>
-      <%= link_to  "Register", "/register" if !current_user %>
-      <%= link_to "Login", "/login" if !current_user %>
-      <%= link_to "Profile", "/profile" if current_user %>
-      <%= link_to "Logout", "/logout" if current_user %>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+</head>
 
-      <%= link_to "Dashboard", "/admin/dashboard" if current_user && current_user.role == "admin" %>
-      <%= link_to "Dashboard", "/merchant/dashboard" if current_user && current_user.role == "merchant" %>
+<body>
+  <nav class="topnav">
+    <p class="white"> <%= "Logged in as #{current_user.name}" if current_user %></p>
+    <%= link_to "Home", "/"%>
+    <%= link_to "All Merchants", "/merchants"%>
+    <%= link_to "All Items", "/items"%>
+    <%= link_to "Cart: #{cart.total_items}", "/cart" %>
+    <%= link_to  "Register", "/register" if !current_user %>
+    <%= link_to "Login", "/login" if !current_user %>
+    <%= link_to "Profile", "/profile" if current_user %>
+    <%= link_to "Logout", "/logout" if current_user %>
+    <%= link_to  "Users", "/admin/users" if current_user && current_user.role == "admin" %>
 
-    </nav>
-    <% flash.each do |name, msg| %>
-      <div class= "<%=name%>-flash">
-        <p><%= msg %></p>
-      </div>
-    <% end %>
-    <%= yield %>
-  </body>
+    <%= link_to "Dashboard", "/admin/dashboard" if current_user && current_user.role == "admin" %>
+    <%= link_to "Dashboard", "/merchant/dashboard" if current_user && current_user.role == "merchant" %>
+
+  </nav>
+  <% flash.each do |name, msg| %>
+  <div class="<%=name%>-flash">
+    <p><%= msg %></p>
+  </div>
+  <% end %>
+  <%= yield %>
+</body>
+
 </html>
