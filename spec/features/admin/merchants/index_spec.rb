@@ -133,8 +133,23 @@ RSpec.describe 'Admin Merchant Index Page' do
     expect(page).to have_content(@item4.name)
     
   end
-  
 
+  it "has city ans state of merchant" do
+  
+    visit admin_merchants_path
+
+    expect(page).to have_content(@merchant1.name) 
+    expect(page).to have_content(@merchant2.name) 
+    expect(page).to have_content(@merchant3.name) 
+    expect(page).to have_content(@merchant1.city) 
+    expect(page).to have_content(@merchant2.city) 
+    expect(page).to have_content(@merchant3.city) 
+    expect(page).to have_content(@merchant1.state) 
+    expect(page).to have_content(@merchant2.state) 
+    expect(page).to have_content(@merchant3.state) 
+
+
+  end
 
   
 
