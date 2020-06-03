@@ -62,9 +62,3 @@ RSpec.describe 'As an admin user' do
     end
   end
 end
-
-
-# As an admin user
-# When I visit a user's profile page ("/admin/users/5")
-# I see the same information the user would see themselves
-# I do not see a link to edit their profile    
