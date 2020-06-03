@@ -64,7 +64,6 @@ RSpec.describe 'User Login-Logout' do
         expect(page).to have_content(@item100.description)
         expect(page).to_not have_content(@item110.description)
         expect(page).to have_content(@item_order100.quantity)
-        expect(page).to_not have_content(@item_order110.quantity)
         expect(page).to have_content(@item100.price)
         expect(page).to have_content(@item_order100.subtotal)
         expect(page).to_not have_content(@item_order110.subtotal)
