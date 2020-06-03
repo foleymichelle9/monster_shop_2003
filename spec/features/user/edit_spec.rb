@@ -7,15 +7,23 @@ RSpec.describe 'profile edit page', type: :feature do
 
     @user2 = create(:user, email: "newemail@test.com")
 
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
+    visit '/login'
+    within("#login-form")do
+      fill_in :email, with: @user1.email
+      fill_in :password, with: 'p123'
+      click_button "Login"
+    end
+
+    # allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
     
     visit "/profile"
 
     click_link "Edit Profile"
   end
 
-  xit 'shows prepopulated form that user is able to change' do
+  it 'shows prepopulated form that user is able to change' do
 
+    
     expect(page).to have_field(:name, :with => @user1.name)
     expect(page).to have_field(:address, :with => @user1.address)
     expect(page).to have_field(:city, :with => @user1.city)
@@ -37,8 +45,6 @@ RSpec.describe 'profile edit page', type: :feature do
     expect(current_path).to eq("/profile")
 
     expect(page).to have_content("Your profile has been updated")
-
-    @user1.reload
 
     expect(page).to have_content("new name")
     expect(page).to have_content("new address")

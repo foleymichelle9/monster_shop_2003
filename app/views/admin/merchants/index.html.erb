@@ -6,9 +6,9 @@
     <li>City: <%=merchant.city %></li><br/>
     <li>State: <%=merchant.state %></li><br/>
     <% if merchant.active? %>
-      <%= button_to "disable", "merchants/#{merchant.id}?active=false", method: :patch %>
+      <%= button_to "disable", "merchants/#{merchant.id}/active?tf=false", method: :patch %>
     <% else %>
-      <%= button_to "enable", "merchants/#{merchant.id}?active=true", method: :patch %>
+      <%= button_to "enable", "merchants/#{merchant.id}/active?tf=true", method: :patch %>
     <% end %>
   </section>
 
