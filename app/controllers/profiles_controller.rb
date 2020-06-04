@@ -3,6 +3,6 @@ class ProfilesController < BaseController
 
   def show
     @user = current_user
-    @orders = Order.all
+    # @orders = @user.orders
   end
 end
