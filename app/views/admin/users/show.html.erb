@@ -6,9 +6,12 @@
 <p>Email: <%= @user.email%></p><br>
 
 <% if !@orders.empty? %>
-  <%
-=begin%>
- <%= link_to 'Their Orders', "/admin/users/#{@user.id}/orders" %> 
-<%
-=end%>
+  <% @orders.each do |order| %>
+    <section id="order-<%=order.id%>">
+      <p><%=order.name %></p>
+      <%= link_to "Order #{order.id}", "/admin/users/#{@user.id}/orders/#{order.id}" %> 
+      <br><br>
+    </section>
+  <%end %>
+
 <% end %>

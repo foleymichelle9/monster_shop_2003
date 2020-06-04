@@ -4,6 +4,7 @@
     <% @orders.each do |order| %>
       <% if order.packaged? %>
         <section id="order-<%=order.id%>">
+          <%= link_to "Order #{order.id}", "/admin/users/#{order.user_id}/orders/#{order.id}" %>
           <p>Ordered by: <%=order.user.name %></p>
           <p>Order id: <%=order.id %></p>
           <p>Created at: <%=order.created_at %></p>
@@ -17,6 +18,7 @@
     <% @orders.each do |order| %>
       <% if order.pending? %>
         <section id="order-<%=order.id%>">
+          <%= link_to "Order #{order.id}", "/admin/users/#{order.user_id}/orders/#{order.id}" %>
           <p>Ordered by: <%=order.user.name %></p>
           <p>Order id: <%=order.id %></p>
           <p>Created at: <%=order.created_at %></p>
@@ -29,6 +31,7 @@
     <% @orders.each do |order| %>
       <% if order.shipped? %>
         <section id="order-<%=order.id%>">
+          <%= link_to "Order #{order.id}", "/admin/users/#{order.user_id}/orders/#{order.id}" %>
           <p>Ordered by: <%=order.user.name %></p>
           <p>Order id: <%=order.id %></p>
           <p>Created at: <%=order.created_at %></p>
@@ -41,6 +44,7 @@
     <% @orders.each do |order| %>
       <% if order.cancelled? %>
         <section id="order-<%=order.id%>">
+          <%= link_to "Order #{order.id}", "/admin/users/#{order.user_id}/orders/#{order.id}" %>
           <p>Ordered by: <%=order.user.name %></p>
           <p>Order id: <%=order.id %></p>
           <p>Created at: <%=order.created_at %></p>
