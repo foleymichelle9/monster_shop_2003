@@ -92,4 +92,15 @@ RSpec.describe 'password edit page', type: :feature do
     expect(current_path).to eq("/profile")
     expect(page).to have_content("Your password has been updated")
   end 
+
+  it 'does not allow user to edit password if passwords do not match' do
+
+    fill_in :password, with: "new password"
+    fill_in :password_confirmation,	with: "new"
+
+    click_button "Submit"
+
+    expect(current_path).to eq("/users/#{@user1.id}/edit_password")
+    expect(page).to have_content("passwords do not match")
+  end 
 end
