@@ -2,9 +2,10 @@
   <p>Order id: <%=@order.id %></p>
   <p>Order Status: <%=@order.status %></p>
 </section>
-<section id="cancel-order">
-  <%= link_to 'Cancel Order', "/profile/orders/#{@order.id}?type=cancel", method: :patch %>
-
+<section id="cancel-order"> 
+  <% if !@order.shipped? && !@order.cancelled? %>
+    <%= link_to 'Cancel Order', "/profile/orders/#{@order.id}?", method: :patch %>
+  <% end %>
 </section>
 
 <section class = "shipping-address">
