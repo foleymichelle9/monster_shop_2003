@@ -165,7 +165,7 @@ tr:nth-child(even) {
   max-width:15%;
   max-height:15%;
 }
-.thumnail {
-  height: 5vh;
-  width: 5vw;
+.thumbnail {
+  height: 40px;
+  width: 40px;
 }

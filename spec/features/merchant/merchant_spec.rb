@@ -62,14 +62,15 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
     before(:each) do
 
       @merchant1 = create(:merchant)
+      @merchant2 = create(:merchant)
       @user1 = create(:user, role: "merchant", merchant_id: @merchant1.id)
 
       @item1 = create(:item, merchant_id: @merchant1.id)
       @item2 = create(:item, merchant_id: @merchant1.id)
       @item3 = create(:item, merchant_id: @merchant1.id)
-      @item4 = create(:item, merchant_id: @merchant1.id)
-      @item5 = create(:item)
-      @item6 = create(:item, merchant_id: @merchant1.id)
+      @item4 = create(:item, merchant_id: @merchant2.id)
+      @item5 = create(:item, merchant_id: @merchant2.id)
+      @item6 = create(:item, merchant_id: @merchant2.id)
 
       @order1 = create(:order, status: "pending")
       @order2 = create(:order, status: "packaged")
@@ -78,6 +79,7 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
 
       ItemOrder.create!(order: @order1, item: @item1, price: @item1.price, quantity: 1, status: "unfulfilled")
       ItemOrder.create!(order: @order1, item: @item2, price: @item2.price, quantity: 1, status: "unfulfilled")
+      ItemOrder.create!(order: @order1, item: @item5, price: @item5.price, quantity: 1, status: "unfulfilled")
       ItemOrder.create!(order: @order2, item: @item3, price: @item3.price, quantity: 1, status: "fulfilled")
       ItemOrder.create!(order: @order3, item: @item4, price: @item4.price, quantity: 1, status: "unfulfilled")
       ItemOrder.create!(order: @order3, item: @item1, price: @item1.price, quantity: 1, status: "unfulfilled")
@@ -92,14 +94,14 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
       within("#order-#{@order1.id}") do
         expect(page).to have_link("#{@order1.id}", :href=> "/merchant/orders/#{@order1.id}")
         expect(page).to have_content(@order1.created_at)
-        expect(page).to have_content(@order1.total_items)
-        expect(page).to have_content(@order1.grandtotal)
+        expect(page).to have_content(@merchant1.my_items_this_order(@order1.id).count)
+        expect(page).to have_content(@merchant1.my_total_this_order(@order1.id))
       end
       within("#order-#{@order3.id}") do
         expect(page).to have_link("#{@order3.id}", :href=> "/merchant/orders/#{@order3.id}")
         expect(page).to have_content(@order3.created_at)
-        expect(page).to have_content(@order3.total_items)
-        expect(page).to have_content(@order3.grandtotal)
+        expect(page).to have_content(@merchant1.my_items_this_order(@order3.id).count)
+        expect(page).to have_content(@merchant1.my_total_this_order(@order3.id))
       end
     end
   end 

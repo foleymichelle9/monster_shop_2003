@@ -11,14 +11,11 @@ class UserOrdersController < BaseController
 
   def update 
     order = Order.find(params[:id])
-    case params[:type]
-    when "cancel"
-      order.update(status: 3)
-      order.item_orders.each { |item_order| item_order.update(status: 0) } 
-      return_merchant_inventory(order)
-      flash[:notice] = "Order #{order.id} has been cancelled"
-      redirect_to '/profile'
-    end
+    order.update(status: 3)
+    order.item_orders.each { |item_order| item_order.update(status: 0) } 
+    return_merchant_inventory(order)
+    flash[:notice] = "Order #{order.id} has been cancelled"
+    redirect_to  "/profile"
   end
   
   private 
