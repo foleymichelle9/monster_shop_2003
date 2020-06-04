@@ -18,8 +18,6 @@
     <p>Item Order Status: <%=item_order.status %></p>
     <% if item_order.has_inventory_and_unfulfilled? %>
       <%= button_to 'Fulfill Item', "/merchant/item_orders/#{item_order.id}", method: :patch %>
-    <% elsif item_order.status == "fulfilled" %>  
-      <p>This item has been fulfilled</p>
     <% else %>
       <p>Not enough inventory to fulfill item</p>
     <% end %>
