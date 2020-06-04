@@ -8,6 +8,5 @@ class Merchant::DashboardController < Merchant::BaseController
     else
       @merchant_orders = []
     end
-    
   end 
 end

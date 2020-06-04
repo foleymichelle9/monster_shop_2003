@@ -31,14 +31,10 @@ class Admin::MerchantsController < Admin::BaseController
       item.update(active?: false)
     end
   end
+  
   def activate_items(merchant)
     merchant.items.each do |item|
       item.update(active?: true)
     end
   end
-
-  
-  
-  
-  
 end

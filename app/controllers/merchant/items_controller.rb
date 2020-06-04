@@ -58,8 +58,6 @@ class Merchant::ItemsController < Merchant::BaseController
     redirect_to merchant_items_path 
   end
   
-  
-
   private 
 
   def item_params
@@ -79,7 +77,4 @@ class Merchant::ItemsController < Merchant::BaseController
     end
     missing_params.join(", ")
   end
-  
-  
-  
 end

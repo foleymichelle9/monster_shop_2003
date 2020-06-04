@@ -8,5 +8,4 @@ class Admin::UsersController < Admin::BaseController
     @user = User.find(params[:id])
     @orders = Order.all
   end
-  
 end
