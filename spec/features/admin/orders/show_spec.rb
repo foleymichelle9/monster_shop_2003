@@ -90,6 +90,9 @@ RSpec.describe "Admin Order Show Page"do
     within("#grandtotal")do
       expect(page).to have_content("Total: $#{@order10.grandtotal}")
     end
+    within("#total_items")do
+      expect(page).to have_content("Total Items: #{@order10.total_items}")
+    end
   end
 
   it "US56 Part II Admin Order page from User Page" do
