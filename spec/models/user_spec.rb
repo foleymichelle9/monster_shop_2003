@@ -14,4 +14,11 @@ RSpec.describe User, type: :model do
     it {should have_many :orders}
     it {should belong_to(:merchant).optional}
   end
+  describe "instance methods" do
+    it "full_address" do
+      user = create(:user)
+
+      expect(user.full_address).to eq("#{user.address}, #{user.city}, #{user.state}, #{user.zip}")
+    end
+  end
 end

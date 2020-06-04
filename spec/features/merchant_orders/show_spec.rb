@@ -10,9 +10,9 @@ RSpec.describe 'Merchant order show page' do
     @merchant2 = create(:merchant)
     @merchant1_user = create(:user, merchant_id: @merchant1.id, role: 1 )
     @merchant2_user = create(:user, merchant_id: @merchant2.id, role: 1 )
-    @item1 = create(:item, merchant: @merchant1, price: 50)
-    @item2 = create(:item, merchant: @merchant1, price: 10)
-    @item3 = create(:item, merchant: @merchant2)
+    @item1 = create(:item, merchant: @merchant1, price: 50, inventory: 50)
+    @item2 = create(:item, merchant: @merchant1, price: 10, inventory: 50)
+    @item3 = create(:item, merchant: @merchant2, inventory: 50)
   
     visit '/login'
     within("#login-form")do
@@ -52,7 +52,7 @@ RSpec.describe 'Merchant order show page' do
     expect(current_path).to eq('/merchant/dashboard')
   end
   
-  it "US31 part I - merchant can fulfil orders" do
+  it "US31 part I - merchant can fulfill orders" do
     visit "/merchant/orders/#{@order1.id}"
     
     within("#item-#{@item1.id}")do
@@ -135,4 +135,50 @@ RSpec.describe 'Merchant order show page' do
       expect(page).to have_content(@item2.item_orders.first.quantity)
     end
   end
+end
+RSpec.describe 'Merchant order show page' do
+  before :each do
+    @regular_user = create(:user)
+
+    @merchant1 = create(:merchant)
+    @merchant_user = create(:user, merchant_id: @merchant1.id, role: 1 )
+
+    @item1 = create(:item, merchant: @merchant1, price: 50, inventory: 2)
+    @item2 = create(:item, merchant: @merchant1, price: 10, inventory: 5)
+
+    @order1 = create(:order, user_id: @regular_user.id)    
+    @order2 = create(:order, user_id: @regular_user.id)
+    
+    @item_order1 = ItemOrder.create(order: @order1, item: @item1, price: @item1.price, quantity: 4)
+    @item_order2 = ItemOrder.create(order: @order2, item: @item2, price: @item2.price, quantity: 4)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_user)
+  end
+  it "US50 & US 51 part I - Quantity requested is more than item inventory, I do not see a fulfill item button" do
+    visit "/merchant/orders/#{@order1.id}"
+    
+    within("#item-#{@item1.id}")do
+      expect(page).to_not have_button("Fulfill Item")
+      expect(page).to have_content("Not enough inventory to fulfill item")
+    end
+
+    visit "/merchant/orders/#{@order2.id}"
+  
+    within("#item-#{@item2.id}")do
+      expect(page).to have_button("Fulfill Item")
+    end
+  end 
+  it "US50 part II -Fulfilling an order permanently reduces an item's inventory by desired quantity" do
+    visit "/merchant/orders/#{@order2.id}"
+
+    expect(@item2.inventory).to eq(5)
+
+    within("#item-#{@item2.id}")do
+      click_button("Fulfill Item")
+    end
+
+    @item2.reload
+
+    expect(@item2.inventory).to eq(1)
+  end 
 end

@@ -64,7 +64,6 @@ RSpec.describe 'User Login-Logout' do
         expect(page).to have_content(@item100.description)
         expect(page).to_not have_content(@item110.description)
         expect(page).to have_content(@item_order100.quantity)
-        expect(page).to_not have_content(@item_order110.quantity)
         expect(page).to have_content(@item100.price)
         expect(page).to have_content(@item_order100.subtotal)
         expect(page).to_not have_content(@item_order110.subtotal)
@@ -161,18 +160,3 @@ RSpec.describe 'User Login-Logout' do
     
   end
 end
-
-
-# User Story 30, User cancels an order
-
-# As a registered user
-# When I visit an order's show page
-# I see a button or link to cancel the order
-# When I click the cancel button for an order, the following happens:
-# x- Each row in the "order items" table is given a status of "unfulfilled"
-# x- The order itself is given a status of "cancelled"
-# x- Any item quantities in the order that were previously fulfilled have 
-    # their quantities returned to their respective merchant's inventory for that item.
-# x- I am returned to my profile page
-# x- I see a flash message telling me the order is now cancelled
-# x- And I see that this order now has an updated status of "cancelled"

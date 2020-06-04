@@ -2,7 +2,9 @@
 
 <%@merchants.each do |merchant| %>
   <section id="merchant-<%=merchant.id%>">
-    <p>Merchant: <%=merchant.name %></p>
+    <p>Merchant: <%=merchant.name %></p><br/>
+    <li>City: <%=merchant.city %></li><br/>
+    <li>State: <%=merchant.state %></li><br/>
     <% if merchant.active? %>
       <%= button_to "disable", "merchants/#{merchant.id}/active?tf=false", method: :patch %>
     <% else %>
