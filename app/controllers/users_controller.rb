@@ -39,7 +39,7 @@ class UsersController < ApplicationController
     elsif email_exists?
       flash[:error] = "Email has already been taken"
       render :new
-    elsif passwords_dont_match?
+    elsif user_passwords_dont_match?
       flash[:error] = "Passwords did not match."
       render :new
     else
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
     params.permit(:name, :address, :city, :state, :zip, :email, :password, :password_confirmation)
   end
 
-  def passwords_dont_match?
+  def user_passwords_dont_match?
     @user.password != @user.password_confirmation
   end
 
