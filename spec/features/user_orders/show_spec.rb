@@ -57,8 +57,8 @@ RSpec.describe 'User Login-Logout' do
       end
 
       within("#item-#{@item_order100.item_id}")do
-        expect(page).to have_css(".item-#{@item_order100.item_id}-image")
-        expect(page).to_not have_css(".item-#{@item_order110.item_id}-image")
+        expect(page).to have_css("img[src*='#{@item_order100.item.image}']")
+        expect(page).to_not have_css("img[src*='#{@item_order110.item.image}']")
         expect(page).to have_content(@item100.name)
         expect(page).to_not have_content(@item110.name)
         expect(page).to have_content(@item100.description)
@@ -70,7 +70,8 @@ RSpec.describe 'User Login-Logout' do
       end
 
       within("#item-#{@item_order110.item_id}")do
-        expect(page).to have_css(".item-#{@item_order110.item_id}-image")
+        expect(page).to have_css("img[src*='#{@item_order110.item.image}']")
+
         expect(page).to have_content(@item110.name)
         expect(page).to have_content(@item110.description)
         expect(page).to have_content(@item_order110.quantity)
@@ -79,7 +80,7 @@ RSpec.describe 'User Login-Logout' do
       end
 
       within("#item-#{@item_order111.item_id}")do
-        expect(page).to have_css(".item-#{@item_order111.item_id}-image")
+        expect(page).to have_css("img[src*='#{@item_order111.item.image}']")
         expect(page).to have_content(@item111.name)
         expect(page).to have_content(@item111.description)
         expect(page).to have_content(@item_order111.quantity)
