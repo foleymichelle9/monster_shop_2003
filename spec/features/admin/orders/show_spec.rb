@@ -131,9 +131,3 @@ RSpec.describe "Admin Order Show Page"do
     end
   end
 end
-
-# As an admin user
-# When I visit a user's order show page
-# If the order is still "pending", I see a button or link to cancel the order
-# When I click the cancel button for an order
-# The same behaviors happen as if the user canceled the order themselves
