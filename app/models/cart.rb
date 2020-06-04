@@ -39,4 +39,8 @@ class Cart
   def quantity_one?(item_id)
     @contents[item_id] == 1
   end
+
+  def inventory_reached?(item_id)
+    @contents[item_id] == Item.find(item_id).inventory
+  end
 end
