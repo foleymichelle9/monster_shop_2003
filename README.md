@@ -124,6 +124,17 @@ An `admin` of this website has all of the same permissions as users except acces
 * This dashboard displays a breakdown of all orders which are sorted by packaged, pending, shipped, and cancelled.
 * Each order has a link to the user who made the order, it's ID, when it was made, current status, and a link to ship the order if fully packaged.
 
+## Schema Design
+
+<img width="782" alt="Screen Shot 2020-06-04 at 4 02 36 PM" src="https://user-images.githubusercontent.com/55991172/83815725-1795ba00-a67e-11ea-897d-4e248aa87500.png">
+
+<img width="743" alt="Screen Shot 2020-06-04 at 3 02 26 PM" src="https://user-images.githubusercontent.com/55991172/83815778-34ca8880-a67e-11ea-8ec4-5fa3af1f1b78.png">
+
+<img width="723" alt="Screen Shot 2020-06-04 at 3 02 38 PM" src="https://user-images.githubusercontent.com/55991172/83815846-5297ed80-a67e-11ea-9928-cc89d5914659.png">
+
+<img width="723" alt="Screen Shot 2020-06-04 at 3 03 06 PM" src="https://user-images.githubusercontent.com/55991172/83815861-5d528280-a67e-11ea-9e32-fdc10e290080.png">
+
+
 ## Logging Out
 
 All types of users have access to logging out. When any type of user logs out, they are redirected to the home page. If there are any items in the cart, they are removed.
