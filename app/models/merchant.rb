@@ -29,4 +29,14 @@ class Merchant <ApplicationRecord
   def this_item_orders(params)
     item_orders.where(order_id: params[:id])
   end
+
+  def my_items_this_order(id)
+    order = Order.find(id)
+    order.items.where(merchant_id:  self.id)
+  end
+
+  def my_total_this_order(id)
+    my_items_this_order(id).joins(:item_orders).sum('item_orders.quantity * items.price')
+  end
+
 end

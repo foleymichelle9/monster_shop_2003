@@ -2,7 +2,7 @@
 
 <%@merchants.each do |merchant| %>
   <section id="merchant-<%=merchant.id%>">
-    <p>Merchant: <%=merchant.name %></p><br/>
+    <%= link_to "Merchant: #{merchant.name}", admin_merchant_path(merchant.id) %>
     <li>City: <%=merchant.city %></li><br/>
     <li>State: <%=merchant.state %></li><br/>
     <% if merchant.active? %>
