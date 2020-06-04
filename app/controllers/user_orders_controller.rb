@@ -29,7 +29,4 @@ class UserOrdersController < BaseController
       item_order.item.update(inventory: new_inventory) 
     end
   end
-
-
-
 end

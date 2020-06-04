@@ -1,8 +1,8 @@
 class OrdersController < BaseController
   before_action :require_regular, except: [:new, :create, :update]
   before_action :require_admin, only: [:update]
-  def new
 
+  def new
   end
 
   def create
@@ -34,8 +34,6 @@ class OrdersController < BaseController
     end
   end
   
-
-
   private
 
   def order_params
@@ -48,6 +46,5 @@ class OrdersController < BaseController
       item_order.item.update(inventory: new_inventory) 
     end
   end
-  
 end
 
