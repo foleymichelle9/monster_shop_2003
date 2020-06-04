@@ -22,7 +22,7 @@ computer_shop = Merchant.create(name: "Zed's Computers", address: '125 Computer 
 tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
 helmet = bike_shop.items.create(name: "Helmet", description: "Safety first", price: 150, image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/HLXM2_AV4?wid=1144&hei=1144&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1522357479494", inventory: 10)
 bicycle = bike_shop.items.create(name: "Bicycle", description: "Mountain bike", price: 800, image: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/canyon-strive-29-tested-1577145399.jpg?crop=0.889xw:1.00xh;0.0705xw,0&resize=640:*", inventory: 3)
-tire_iron = bike_shop.items.create(name: "Tire Iron", description: "Does the job", price: 10, image: "https://www.somafab.com/wp-content/uploads/2011/06/tirelever_core_full_lever4c1.jpg", inventory: 0, active?: false)
+tire_iron = bike_shop.items.create(name: "Tire Iron", description: "Does the job", price: 10, image: "https://www.somafab.com/wp-content/uploads/2011/06/tirelever_core_full_lever4c1.jpg", inventory: 10, active?: false)
 
 #bike_shop item reviews
 review1 = tire.reviews.create(title: "Great tire", content: "Will buy this tire again", rating: 4)
@@ -32,7 +32,7 @@ review2 = helmet.reviews.create(title: "Cool helmet", content: "Very safe", rati
 pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "https://m.media-amazon.com/images/I/61lYdX-EdfL._AC_SS350_.jpg", inventory: 32)
 dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", inventory: 21)
 dog_food = dog_shop.items.create(name: "Dog Food", description: "Super tasty", price: 30, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRgRJErkeYhfadwU8k2Jux0Hhp7KsvijgO61Ia2T__NWpPl3cLZ&usqp=CAU", inventory: 15)
-dog_pram = dog_shop.items.create(name: "Dog pram", description: "Carry your dog in style", price: 200, image: "https://assets.petco.com/petco/image/upload/f_auto,q_auto,t_ProductDetail-large/2327664-center-2", inventory: 0, active?: false)
+dog_pram = dog_shop.items.create(name: "Dog pram", description: "Carry your dog in style", price: 200, image: "https://assets.petco.com/petco/image/upload/f_auto,q_auto,t_ProductDetail-large/2327664-center-2", inventory: 10, active?: false)
 
 #dog_shop item reviews
 review3 = pull_toy.reviews.create(title: "Crappy pull toy", content: "Dog hates this", rating: 1)
