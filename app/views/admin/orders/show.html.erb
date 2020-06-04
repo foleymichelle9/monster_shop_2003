@@ -22,7 +22,14 @@
     </tr>
   </table>
 </section>
-
+<center>
+<% if @order.status == "pending" %>
+<section id="cancel-order">
+  <%= link_to 'Cancel Order', "/admin/users/#{@user.id}/orders/#{@order.id}?type=cancel", method: :patch %>
+</section>
+<% else %>
+<% end %>
+</center><br>
 <h1 align = "center">Order Info</h1>
 <center>
   <table>
