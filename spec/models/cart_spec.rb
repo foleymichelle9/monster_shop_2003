@@ -63,5 +63,15 @@ RSpec.describe Cart do
 
       expect(@cart.quantity_one?(@giant.id.to_s)).to eq(true)
     end
+
+    it '.inventory_reached?()' do
+      expect(@cart.inventory_reached?(@hippo.id.to_s)).to eq(false)
+
+      3.times do 
+        @cart.add_item(@hippo.id.to_s)
+      end  
+
+      expect(@cart.inventory_reached?(@hippo.id.to_s)).to eq(true)
+    end
   end
 end

@@ -3,8 +3,12 @@ class CartController < BaseController
 
   def add_item
     item = Item.find(params[:item_id])
-    cart.add_item(item.id.to_s)
-    flash[:success] = "#{item.name} was successfully added to your cart"
+    cart.add_item(item.id.to_s) unless cart.inventory_reached?(params[:item_id])
+    if cart.inventory_reached?(params[:item_id])
+      flash[:error] = "You have reached the inventory limit. You cannot add #{item.name} to your cart."
+    else
+      flash[:success] = "#{item.name} was successfully added to your cart"
+    end 
     
     redirect_to "/items" if params[:cart].nil?
     redirect_to "/cart" if params[:cart]

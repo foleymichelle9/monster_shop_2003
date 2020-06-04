@@ -102,21 +102,46 @@ RSpec.describe 'Cart show' do
         end
         expect(page).to have_no_content(@tire.name)
       end
+
+      it 'I see a message saying that I cannot go passed the inventory limit' do 
+        visit "/items/#{@paper.id}"
+        click_on "Add To Cart"
+        
+        visit "/cart"
+
+        within "#cart-item-#{@paper.id}" do
+          within "##{@paper.id}-quantity" do 
+            expect(page).to have_content("2")
+          end
+          expect(page).to have_link("+") 
+          
+          24.times do
+            click_link("+")
+          end
+        end
+
+        expect(page).to have_content("You have reached the inventory limit. You cannot add #{@paper.name} to your cart.") 
+
+        expect(current_path).to eq("/cart") 
+        within "##{@paper.id}-quantity" do 
+          expect(page).to have_content("25")
+        end
+      end
     end
   end
-  # describe "When I haven't added anything to my cart" do
-  #   describe "and visit my cart show page" do
-  #     it "I see a message saying my cart is empty" do
-  #       visit '/cart'
-  #       expect(page).to_not have_css(".cart-items")
-  #       expect(page).to have_content("Cart is currently empty")
-  #     end
+  describe "When I haven't added anything to my cart" do
+    describe "and visit my cart show page" do
+      it "I see a message saying my cart is empty" do
+        visit '/cart'
+        expect(page).to_not have_css(".cart-items")
+        expect(page).to have_content("Cart is currently empty")
+      end
 
-  #     it "I do NOT see the link to empty my cart" do
-  #       visit '/cart'
-  #       expect(page).to_not have_link("Empty Cart")
-  #     end
+      it "I do NOT see the link to empty my cart" do
+        visit '/cart'
+        expect(page).to_not have_link("Empty Cart")
+      end
 
-  #   end
-  # end
+    end
+  end
 end
