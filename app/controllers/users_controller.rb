@@ -14,13 +14,16 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:user_id])
     @user.update(user_params)
-
-    if @user.save && params[:password_confirmation]
+    
+    if @user.save && param_passwords_match?
       flash[:success] = "Your password has been updated"
       redirect_to "/profile"
     elsif @user.save
       flash[:success] = "Your profile has been updated"
       redirect_to "/profile"
+    elsif param_passwords_dont_match?
+      flash[:error] = "passwords do not match"
+      redirect_to "/users/#{@user.id}/edit_password"
     else
       flash[:error] = "Email has already been taken"
       redirect_to "/users/#{@user.id}/edit"
@@ -54,6 +57,14 @@ class UsersController < ApplicationController
   def passwords_dont_match?
     @user.password != @user.password_confirmation
   end
+
+  def param_passwords_match?
+    params[:password] == params[:password_confirmation] if params[:password] != nil
+  end 
+
+  def param_passwords_dont_match?
+    params[:password] != params[:password_confirmation] if params[:password] != nil
+  end 
 
   def email_exists?
     User.where(email: params[:email]).exists?
