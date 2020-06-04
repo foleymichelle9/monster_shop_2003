@@ -1,6 +1,11 @@
     class SessionsController < ApplicationController
     def new
-      redirect_user
+      if session[:user_id]
+        flash[:notice] = "You are already logged in"
+        redirect_user
+      else 
+        redirect_user
+      end 
     end
 
     def create
@@ -32,7 +37,6 @@
     def redirect_user
       return if session[:user_id].nil?
       user = User.find(session[:user_id])
-
       redirect_to ("/profile") if user.role == "regular"
       redirect_to ("/merchant/dashboard") if user.role == "merchant"
       redirect_to ("/admin/dashboard") if user.role == "admin"

@@ -16,7 +16,7 @@ RSpec.describe "Admin Order Show Page"do
 
     @item1 = create(:item, merchant: @merchant1)
     @item2 = create(:item, merchant: @merchant1)
-    @item3 = create(:item, merchant: @merchant2)
+    @item3 = create(:item, merchant: @merchant2, inventory: 10)
 
     @order10 = create(:order, user: @regular1, status: 3) #cancelled - 4th
     @order11 = create(:order, user: @regular1, status: 1) #packaged - 1st
@@ -25,9 +25,9 @@ RSpec.describe "Admin Order Show Page"do
 
     @item_order1 = ItemOrder.create(order_id: @order10.id, item_id: @item1.id, status: 0, price: @item1.price, quantity: 1)
     @item_order2 = ItemOrder.create(order_id: @order10.id, item_id: @item2.id, status: 0, price: @item2.price, quantity: 1)
-    ItemOrder.create(order_id: @order11.id, item_id: @item2.id, status: 1, price: @item2.price, quantity: 1)
-    ItemOrder.create(order_id: @order2.id, item_id: @item2.id, status: 1, price: @item2.price, quantity: 2)
-    ItemOrder.create(order_id: @order3.id, item_id: @item3.id, status: 1, price: @item3.price, quantity: 3)
+    @item_order3 = ItemOrder.create(order_id: @order11.id, item_id: @item2.id, status: 1, price: @item2.price, quantity: 1)
+    @item_order4 = ItemOrder.create(order_id: @order2.id, item_id: @item2.id, status: 1, price: @item2.price, quantity: 2)
+    @item_order5 = ItemOrder.create(order_id: @order3.id, item_id: @item3.id, status: 1, price: @item3.price, quantity: 3)
 
     visit '/login'
     within("#login-form")do
@@ -102,19 +102,32 @@ RSpec.describe "Admin Order Show Page"do
     expect(current_path).to eq("/admin/users/#{@regular1.id}/orders/#{@order10.id}")
 
   end
-  
+  it "US57 admin cancels an order and items are unfulfilled and returned to their inventory" do
 
+    visit "/admin/users/#{@regular3.id}/orders/#{@order3.id}"
+
+    within("#cancel-order")do
+      click_link "Cancel Order"
+    end
+
+    expect(current_path).to eq(admin_dashboard_path)
+    expect(page).to have_content("Order #{@order3.id} has been cancelled")
+
+    visit '/items'
+    within("#item-#{@item3.id}")do
+      expect(page).to have_content("Inventory: 13")
+    end
+
+    visit "/admin/users/#{@regular3.id}/orders/#{@order3.id}"
+
+    expect(page).to_not have_css("#cancel-order")
+
+    within(".shipping-address")do
+      expect(page).to have_content("cancelled")
+    end
+
+    within("#item-#{@item_order5.item_id}")do
+      expect(page).to have_content("unfulfilled")
+    end
+  end
 end
-
-# As an admin user
-# When I visit a user's profile
-# And I click on a link for order's show page
-# My URL route is now something like "/admin/users/5/orders/15"
-# I see all information about the order, including the following information:
-# - the ID of the order
-# - the date the order was made
-# - the date the order was last updated
-# - the current status of the order
-# - each item the user ordered, including name, description, thumbnail, quantity, price and subtotal
-# - the total quantity of items in the whole order
-# - the grand total of all items for that order

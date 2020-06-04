@@ -115,6 +115,7 @@ RSpec.describe 'User Login-Logout' do
       end
       visit '/login'
 
+      expect(page).to have_content("You are already logged in")
       expect(current_path).to eq('/profile')
     end
     it "if merchant it redirects to merchant dashboard" do
@@ -128,6 +129,7 @@ RSpec.describe 'User Login-Logout' do
       end
 
       visit '/login'
+      expect(page).to have_content("You are already logged in")
       expect(current_path).to eq('/merchant/dashboard')
     end
     it "if admin it redirects to admin dashboard" do
@@ -141,6 +143,7 @@ RSpec.describe 'User Login-Logout' do
       end
 
       visit '/login'
+      expect(page).to have_content("You are already logged in")
       expect(current_path).to eq('/admin/dashboard')
     end
   end
