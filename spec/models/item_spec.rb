@@ -54,8 +54,12 @@ describe Item, type: :model do
       item3 = create(:item)
 
       items = Item.all
+      items.reload
 
-      expect(items.active_items).to eq([@chain, item1, item3])
+      expect(items.active_items.include?(@chain)).to eq(true)
+      expect(items.active_items.include?(item1)).to eq(true)
+      expect(items.active_items.include?(item3)).to eq(true)
+      expect(items.active_items.include?(item2)).to eq(false)
     end
   end 
   describe "methods" do

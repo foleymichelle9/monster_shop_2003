@@ -82,5 +82,47 @@ describe Merchant, type: :model do
       expect(@merchant1.this_item_orders(params)).to eq([@item_order101, @item_order102])
     end
 
+    it "my_items_this_order" do
+      @regular1 = create(:user)
+      @regular2 = create(:user)
+      @merchant1 = create(:merchant)
+      @merchant2 = create(:merchant)
+
+      @item1 = create(:item, merchant: @merchant1, price: 1)
+      @item2 = create(:item, merchant: @merchant1, price: 20)
+      @item3 = create(:item, merchant: @merchant2, price: 30)
+
+      @order1 = create(:order, user: @regular1, status: 0) #pending
+
+      ItemOrder.create(order_id: @order1.id, item_id: @item1.id, status: 0, price: @item1.price, quantity: 1)
+      ItemOrder.create(order_id: @order1.id, item_id: @item2.id, status: 0, price: @item2.price, quantity: 1)
+      ItemOrder.create(order_id: @order1.id, item_id: @item3.id, status: 1, price: @item3.price, quantity: 1)
+      
+      expect(@merchant1.my_items_this_order(@order1.id)).to eq([@item1, @item2])
+      expect(@merchant2.my_items_this_order(@order1.id)).to eq([@item3])
+    end
+
+    it "my_total_this_order" do
+      @regular1 = create(:user)
+      @regular2 = create(:user)
+      @merchant1 = create(:merchant)
+      @merchant2 = create(:merchant)
+
+      @item1 = create(:item, merchant: @merchant1, price: 1)
+      @item2 = create(:item, merchant: @merchant1, price: 20)
+      @item3 = create(:item, merchant: @merchant2, price: 30)
+
+      @order1 = create(:order, user: @regular1, status: 0) #pending
+
+      ItemOrder.create(order_id: @order1.id, item_id: @item1.id, status: 0, price: @item1.price, quantity: 1)
+      ItemOrder.create(order_id: @order1.id, item_id: @item2.id, status: 0, price: @item2.price, quantity: 2)
+      ItemOrder.create(order_id: @order1.id, item_id: @item3.id, status: 1, price: @item3.price, quantity: 3)
+      
+      expect(@merchant1.my_total_this_order(@order1.id)).to eq(41)
+      expect(@merchant2.my_total_this_order(@order1.id)).to eq(90)
+    end
+    
+    
+
   end
 end
