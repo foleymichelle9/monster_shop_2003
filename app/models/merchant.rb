@@ -36,7 +36,7 @@ class Merchant <ApplicationRecord
   end
 
   def my_total_this_order(id)
-    my_items_this_order(id).joins(:item_orders).sum('item_orders.quantity * items.price')
+    my_items_this_order(id).joins(:item_orders).distinct.sum('item_orders.quantity * items.price')
   end
 
 end
